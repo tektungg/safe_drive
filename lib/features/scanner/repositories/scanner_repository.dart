@@ -1,0 +1,4 @@
+class ScannerRepository {
+  ScannerRepository._();
+}
+    

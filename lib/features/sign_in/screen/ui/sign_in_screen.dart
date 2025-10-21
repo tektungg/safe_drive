@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:safe_drive/configs/routes/route.dart';
 import 'package:safe_drive/features/sign_in/controllers/sign_in_controller.dart';
 import 'package:safe_drive/shared/styles/google_text_style.dart';
 import 'package:safe_drive/shared/widgets/custom_text_editing_widget.dart';
@@ -82,7 +83,7 @@ class SignInScreen extends GetView<SignInController> {
                     VButton(
                       label: "Login",
                       layout: VButtonLayout.FULL,
-                      onTap: controller.login,
+                      onTap: () => Get.toNamed(Routes.settingRoute),
                     )
                   ],
                 ),

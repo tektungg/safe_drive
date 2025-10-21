@@ -1,0 +1,4 @@
+class SettingRepository {
+  SettingRepository._();
+}
+    
