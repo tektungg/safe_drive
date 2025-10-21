@@ -9,6 +9,7 @@ import 'package:safe_drive/flavors.dart';
 import 'package:safe_drive/utils/services/api_service.dart';
 import 'package:safe_drive/utils/services/applink_service.dart';
 import 'package:safe_drive/utils/services/hive_service.dart';
+import 'package:safe_drive/utils/services/supabase_service.dart';
 import 'package:vpack/vpack.dart';
 import 'utils/services/sentry_services.dart';
 
@@ -28,6 +29,7 @@ Future<void> _initServices() async {
   await F.init();
 
   await Get.putAsync(() => HiveService().initHive());
+  await Get.putAsync(() => SupabaseService().init());
   /* Uncomment jika sudah membuat Firebase Options 
    await Get.putAsync(() => LocalNotificationService().initNotification());
    await Get.putAsync(() => FirebaseNotificationService().init());

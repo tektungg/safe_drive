@@ -16,4 +16,3 @@ class EditProfileScreen extends GetView<EditProfileController> {
     );
   }
 }
-    

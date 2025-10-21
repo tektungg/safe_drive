@@ -8,4 +8,5 @@ abstract class Routes {
 static const String homeRoute = '/home';
 static const String scannerRoute = '/scanner';
 static const String editProfileRoute = '/edit_profile';
+static const String signUpRoute = '/sign_up';
 }
