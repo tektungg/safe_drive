@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:safe_drive/utils/services/supabase_service.dart';
 import 'package:venturo_api_manager/loggers/logger.dart';
@@ -7,8 +8,44 @@ class SignUpController extends GetxController {
 
   final SupabaseService _supabaseService = SupabaseService.instance;
 
+  // Form key
+  final Rx<GlobalKey<FormState>> formKey = GlobalKey<FormState>().obs;
+
+  // Text editing controllers
+  final Rx<TextEditingController> emailController = TextEditingController().obs;
+  final Rx<TextEditingController> passwordController =
+      TextEditingController().obs;
+
   // Loading state
   final RxBool isLoading = false.obs;
+
+  @override
+  void onClose() {
+    emailController.value.dispose();
+    passwordController.value.dispose();
+    super.onClose();
+  }
+
+  // Validators
+  String? validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your email';
+    }
+    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+      return 'Please enter a valid email';
+    }
+    return null;
+  }
+
+  String? validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your password';
+    }
+    if (value.length < 6) {
+      return 'Password must be at least 6 characters';
+    }
+    return null;
+  }
 
   // Sign in with Google
   Future<void> signInWithGoogle() async {

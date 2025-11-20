@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:safe_drive/features/sign_up/controllers/sign_up_controller.dart';
 import 'package:safe_drive/shared/widgets/custom_app_bar_widget.dart';
+import 'package:safe_drive/shared/widgets/custom_text_editing_widget.dart';
 
 class SignUpScreen extends GetView<SignUpController> {
   const SignUpScreen({super.key});
@@ -16,76 +17,64 @@ class SignUpScreen extends GetView<SignUpController> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Header Section
-              SizedBox(height: 40.h),
-              Text(
-                'Create Account',
-                style: TextStyle(
-                  fontSize: 32.sp,
-                  fontWeight: FontWeight.bold,
+          child: Form(
+            key: controller.formKey.value,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Header Section
+                SizedBox(height: 40.h),
+                Text(
+                  'Create Account',
+                  style: TextStyle(
+                    fontSize: 32.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 12.h),
-              Text(
-                'Sign up to get started',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  color: Colors.grey[600],
+                SizedBox(height: 12.h),
+                Text(
+                  'Sign up to get started',
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    color: Colors.grey[600],
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
 
-              SizedBox(height: 60.h),
+                SizedBox(height: 60.h),
 
-              // Email Input Field
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  hintText: 'Enter your email',
+                // Email Input Field
+                CustomTextEditingWidget(
+                  label: 'Email',
+                  controller: controller.emailController.value,
+                  hint: 'Enter your email',
+                  keyboardType: TextInputType.emailAddress,
                   prefixIcon: const Icon(Icons.email_outlined),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.r),
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 16.h,
+                    horizontal: 12.w,
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                    borderSide: BorderSide(color: Colors.grey[300]!),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                    borderSide: const BorderSide(color: Colors.blue, width: 2),
-                  ),
+                  validator: controller.validateEmail,
                 ),
-                keyboardType: TextInputType.emailAddress,
-              ),
 
-              SizedBox(height: 16.h),
+                SizedBox(height: 16.h),
 
-              // Password Input Field
-              TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                  labelText: 'Password',
-                  hintText: 'Enter your password',
+                // Password Input Field
+                CustomTextEditingWidget(
+                  label: 'Password',
+                  controller: controller.passwordController.value,
+                  hint: 'Enter your password',
+                  isPassword: true,
                   prefixIcon: const Icon(Icons.lock_outlined),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.r),
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 16.h,
+                    horizontal: 12.w,
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                    borderSide: BorderSide(color: Colors.grey[300]!),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                    borderSide: const BorderSide(color: Colors.blue, width: 2),
-                  ),
+                  validator: controller.validatePassword,
                 ),
-              ),
 
-              SizedBox(height: 24.h),
+                SizedBox(height: 24.h),
 
               // Sign Up Button
               ElevatedButton(
@@ -204,7 +193,8 @@ class SignUpScreen extends GetView<SignUpController> {
                 ],
               ),
               SizedBox(height: 20.h),
-            ],
+              ],
+            ),
           ),
         ),
       ),
