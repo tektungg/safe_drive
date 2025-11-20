@@ -1,4 +1,5 @@
 import "package:get/get.dart";
+import "package:google_sign_in/google_sign_in.dart";
 import "package:supabase_flutter/supabase_flutter.dart";
 import "package:safe_drive/env/env.dart";
 import "package:venturo_api_manager/loggers/logger.dart";
@@ -34,5 +35,53 @@ class SupabaseService extends GetxService {
   // Sign out
   Future<void> signOut() async {
     await client.auth.signOut();
+  }
+
+  // Sign in with Google
+  Future<AuthResponse?> signInWithGoogle() async {
+    try {
+      // Web Client ID dari Google Console (untuk iOS gunakan iOS Client ID)
+      const webClientId = '391478746861-2b15soo5o1tp8vu8p8adfgc2m2du4ckm.apps.googleusercontent.com';
+
+      // iOS Client ID dari Info.plist
+      const iosClientId = '391478746861-2dv6s327qvamnphnvpngat2lg98o8c3b.apps.googleusercontent.com';
+
+      final GoogleSignIn googleSignIn = GoogleSignIn(
+        clientId: iosClientId,
+        serverClientId: webClientId,
+      );
+
+      final googleUser = await googleSignIn.signIn();
+
+      if (googleUser == null) {
+        logger.w("Google Sign In cancelled by user");
+        return null;
+      }
+
+      final googleAuth = await googleUser.authentication;
+      final accessToken = googleAuth.accessToken;
+      final idToken = googleAuth.idToken;
+
+      if (accessToken == null) {
+        logger.e("No Access Token found");
+        throw 'No Access Token found.';
+      }
+      if (idToken == null) {
+        logger.e("No ID Token found");
+        throw 'No ID Token found.';
+      }
+
+      final response = await client.auth.signInWithIdToken(
+        provider: OAuthProvider.google,
+        idToken: idToken,
+        accessToken: accessToken,
+      );
+
+      logger.i("Google Sign In successful: ${response.user?.email}");
+      return response;
+    } catch (e) {
+      logger.e("Error during Google Sign In: $e");
+      rethrow;
+    }
   }
 }
