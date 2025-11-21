@@ -58,20 +58,6 @@ class SignUpController extends GetxController {
       hasNumber.value &&
       hasSymbol.value;
 
-  void resetForm() {
-    formKey.value.currentState?.reset();
-    nameController.value.clear();
-    emailController.value.clear();
-    passwordController.value.clear();
-    confirmPasswordController.value.clear();
-    hasMinLength.value = false;
-    hasLowercase.value = false;
-    hasUppercase.value = false;
-    hasNumber.value = false;
-    hasSymbol.value = false;
-    isPasswordFocused.value = false;
-  }
-
   @override
   void onClose() {
     passwordController.value.removeListener(_validatePasswordRealtime);
@@ -151,7 +137,6 @@ class SignUpController extends GetxController {
 
       if (response.user != null) {
         logger.i("Sign up with email successful");
-        resetForm();
         Get.snackbar(
           'Success',
           'Account created successfully! Please check your email to verify your account.',

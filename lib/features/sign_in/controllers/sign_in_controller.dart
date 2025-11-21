@@ -55,17 +55,6 @@ class SignInController extends GetxController {
       hasNumber.value &&
       hasSymbol.value;
 
-  void resetForm() {
-    formKey.value.currentState?.reset();
-    emailController.value.clear();
-    passwordController.value.clear();
-    hasMinLength.value = false;
-    hasLowercase.value = false;
-    hasUppercase.value = false;
-    hasNumber.value = false;
-    hasSymbol.value = false;
-    isPasswordFocused.value = false;
-  }
 
   @override
   void onClose() {
@@ -123,7 +112,6 @@ class SignInController extends GetxController {
 
       if (response.user != null) {
         logger.i("Sign in with email successful");
-        resetForm();
         Get.snackbar(
           'Success',
           'Successfully signed in!',
@@ -154,7 +142,6 @@ class SignInController extends GetxController {
 
       if (response != null && response.user != null) {
         logger.i("Sign in with Google successful");
-        resetForm();
         Get.snackbar(
           'Success',
           'Successfully signed in with Google!',
