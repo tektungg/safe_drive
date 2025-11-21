@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:safe_drive/constants/asset_constant.dart';
 import 'package:safe_drive/features/sign_in/screen/ui/sign_in_screen.dart';
 import 'package:safe_drive/features/sign_up/controllers/sign_up_controller.dart';
 import 'package:safe_drive/shared/widgets/custom_app_bar_widget.dart';
@@ -138,8 +139,8 @@ class SignUpScreen extends GetView<SignUpController> {
                                     AlwaysStoppedAnimation<Color>(Colors.white),
                               ),
                             )
-                          : Image.network(
-                              'https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg',
+                          : Image.asset(
+                              AssetConstants.iconGoogle,
                               width: 24.w,
                               height: 24.h,
                             ),
