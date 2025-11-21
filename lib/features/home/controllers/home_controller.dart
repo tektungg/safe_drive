@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:safe_drive/configs/routes/route.dart';
+import 'package:safe_drive/shared/widgets/custom_toast_widget.dart';
 import 'package:safe_drive/utils/services/supabase_service.dart';
 
 class HomeController extends GetxController {
@@ -9,5 +10,7 @@ class HomeController extends GetxController {
   Future<void> signOut() async {
     await _supabaseService.signOut();
     Get.offAllNamed(Routes.signInRoute);
+    CustomToast.show(
+        message: "Signed out successfully", type: ToastType.success);
   }
 }

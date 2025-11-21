@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:safe_drive/configs/routes/route.dart';
+import 'package:safe_drive/shared/widgets/custom_toast_widget.dart';
+import 'package:safe_drive/utils/helpers/supabase_error_handler.dart';
 import 'package:safe_drive/utils/services/supabase_service.dart';
 import 'package:venturo_api_manager/loggers/logger.dart';
 
@@ -127,22 +129,14 @@ class SignUpController extends GetxController {
       );
 
       if (response.user != null) {
-        logger.i("Sign up with email successful");
-        Get.snackbar(
-          'Success',
-          'Account created successfully!',
-          snackPosition: SnackPosition.BOTTOM,
-        );
-
         // Navigate to profile setup screen
         Get.offAllNamed(Routes.profileSetupRoute);
       }
     } catch (e) {
       logger.e("Error signing up with email: $e");
-      Get.snackbar(
-        'Error',
-        'Failed to create account: ${e.toString()}',
-        snackPosition: SnackPosition.BOTTOM,
+      CustomToast.show(
+        message: SupabaseErrorHandler.parseError(e),
+        type: ToastType.error,
       );
     } finally {
       isLoading.value = false;

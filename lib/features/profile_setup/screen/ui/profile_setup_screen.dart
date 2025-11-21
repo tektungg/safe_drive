@@ -135,18 +135,6 @@ class ProfileSetupScreen extends GetView<ProfileSetupController> {
                     )),
 
                 SizedBox(height: 16.h),
-
-                // Skip Button
-                TextButton(
-                  onPressed: controller.skipSetup,
-                  child: Text(
-                    'Skip for now',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      color: Colors.grey[600],
-                    ),
-                  ),
-                ),
               ],
             ),
           ),

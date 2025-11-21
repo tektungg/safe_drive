@@ -5,6 +5,9 @@ import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:safe_drive/configs/routes/route.dart';
+import 'package:safe_drive/shared/widgets/custom_bottom_sheet_widget.dart';
+import 'package:safe_drive/shared/widgets/custom_toast_widget.dart';
+import 'package:safe_drive/utils/helpers/supabase_error_handler.dart';
 import 'package:safe_drive/utils/services/supabase_service.dart';
 import 'package:venturo_api_manager/loggers/logger.dart';
 
@@ -71,6 +74,10 @@ class ProfileSetupController extends GetxController {
       return null;
     } catch (e) {
       logger.e("Error cropping image: $e");
+      CustomToast.show(
+        message: 'Failed to crop image',
+        type: ToastType.error,
+      );
       return null;
     }
   }
@@ -90,10 +97,9 @@ class ProfileSetupController extends GetxController {
       }
     } catch (e) {
       logger.e("Error picking image from gallery: $e");
-      Get.snackbar(
-        'Error',
-        'Failed to pick image',
-        snackPosition: SnackPosition.BOTTOM,
+      CustomToast.show(
+        message: 'Failed to pick image from gallery',
+        type: ToastType.error,
       );
     }
   }
@@ -114,53 +120,32 @@ class ProfileSetupController extends GetxController {
       }
     } catch (e) {
       logger.e("Error picking image from camera: $e");
-      Get.snackbar(
-        'Error',
-        'Failed to capture image',
-        snackPosition: SnackPosition.BOTTOM,
+      CustomToast.show(
+        message: 'Failed to capture image',
+        type: ToastType.error,
       );
     }
   }
 
   // Show image picker bottom sheet
   void showImagePickerOptions() {
-    Get.bottomSheet(
-      Container(
-        padding: const EdgeInsets.all(20),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    CustomBottomSheet.show(
+      title: 'Choose Photo',
+      subtitle: 'Select how you want to add your profile picture',
+      actions: [
+        BottomSheetAction(
+          icon: Icons.photo_library_rounded,
+          label: 'Gallery',
+          subtitle: 'Choose from your photos',
+          onTap: () => pickImageFromGallery(),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              'Choose Photo',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 20),
-            ListTile(
-              leading: const Icon(Icons.photo_library),
-              title: const Text('Gallery'),
-              onTap: () {
-                Get.back();
-                pickImageFromGallery();
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.camera_alt),
-              title: const Text('Camera'),
-              onTap: () {
-                Get.back();
-                pickImageFromCamera();
-              },
-            ),
-          ],
+        BottomSheetAction(
+          icon: Icons.camera_alt_rounded,
+          label: 'Camera',
+          subtitle: 'Take a new photo',
+          onTap: () => pickImageFromCamera(),
         ),
-      ),
+      ],
     );
   }
 
@@ -212,29 +197,23 @@ class ProfileSetupController extends GetxController {
           avatarUrl: avatarUrl,
           picture: avatarUrl);
 
-      logger.i("Profile setup completed");
-      Get.snackbar(
-        'Success',
-        'Profile setup completed!',
-        snackPosition: SnackPosition.BOTTOM,
+      logger.i("Account created successfully");
+      CustomToast.show(
+        message: 'Account created successfully!',
+        type: ToastType.success,
       );
 
-      // Navigate to home screen
+      // Wait for toast to show before navigating
+      await Future.delayed(const Duration(milliseconds: 1500));
       Get.offAllNamed(Routes.homeRoute);
     } catch (e) {
       logger.e("Error saving profile: $e");
-      Get.snackbar(
-        'Error',
-        'Failed to save profile: ${e.toString()}',
-        snackPosition: SnackPosition.BOTTOM,
+      CustomToast.show(
+        message: SupabaseErrorHandler.parseError(e),
+        type: ToastType.error,
       );
     } finally {
       isLoading.value = false;
     }
-  }
-
-  // Skip profile setup
-  void skipSetup() {
-    Get.offAllNamed(Routes.homeRoute);
   }
 }

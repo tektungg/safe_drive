@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:safe_drive/configs/routes/route.dart';
+import 'package:safe_drive/shared/widgets/custom_toast_widget.dart';
+import 'package:safe_drive/utils/helpers/supabase_error_handler.dart';
 import 'package:safe_drive/utils/services/supabase_service.dart';
 import 'package:venturo_api_manager/loggers/logger.dart';
 
@@ -112,20 +114,19 @@ class SignInController extends GetxController {
 
       if (response.user != null) {
         logger.i("Sign in with email successful");
-        Get.snackbar(
-          'Success',
-          'Successfully signed in!',
-          snackPosition: SnackPosition.BOTTOM,
+        CustomToast.show(
+          message: 'Successfully signed in!',
+          type: ToastType.success,
         );
 
+        await Future.delayed(const Duration(milliseconds: 1500));
         Get.offAllNamed(Routes.homeRoute);
       }
     } catch (e) {
       logger.e("Error signing in with email: $e");
-      Get.snackbar(
-        'Error',
-        'Failed to sign in: ${e.toString()}',
-        snackPosition: SnackPosition.BOTTOM,
+      CustomToast.show(
+        message: SupabaseErrorHandler.parseError(e),
+        type: ToastType.error,
       );
     } finally {
       isLoading.value = false;
@@ -141,22 +142,21 @@ class SignInController extends GetxController {
 
       if (response != null && response.user != null) {
         logger.i("Sign in with Google successful");
-        Get.snackbar(
-          'Success',
-          'Successfully signed in with Google!',
-          snackPosition: SnackPosition.BOTTOM,
+        CustomToast.show(
+          message: 'Successfully signed in with Google!',
+          type: ToastType.success,
         );
 
+        await Future.delayed(const Duration(milliseconds: 1500));
         Get.offAllNamed(Routes.homeRoute);
       } else {
         logger.w("Google sign in cancelled");
       }
     } catch (e) {
       logger.e("Error signing in with Google: $e");
-      Get.snackbar(
-        'Error',
-        'Failed to sign in with Google: ${e.toString()}',
-        snackPosition: SnackPosition.BOTTOM,
+      CustomToast.show(
+        message: SupabaseErrorHandler.parseError(e),
+        type: ToastType.error,
       );
     } finally {
       isGoogleLoading.value = false;
