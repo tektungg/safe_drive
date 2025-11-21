@@ -20,8 +20,56 @@ class SignInController extends GetxController {
   final RxBool isLoading = false.obs;
   final RxBool isGoogleLoading = false.obs;
 
+  // Password validation states
+  final RxBool hasMinLength = false.obs;
+  final RxBool hasLowercase = false.obs;
+  final RxBool hasUppercase = false.obs;
+  final RxBool hasNumber = false.obs;
+  final RxBool hasSymbol = false.obs;
+
+  // Password focus state
+  final RxBool isPasswordFocused = false.obs;
+
+  // Shake animation trigger
+  final RxBool shakePasswordRequirements = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    passwordController.value.addListener(_validatePasswordRealtime);
+  }
+
+  void _validatePasswordRealtime() {
+    final password = passwordController.value.text;
+    hasMinLength.value = password.length >= 6;
+    hasLowercase.value = password.contains(RegExp(r'[a-z]'));
+    hasUppercase.value = password.contains(RegExp(r'[A-Z]'));
+    hasNumber.value = password.contains(RegExp(r'[0-9]'));
+    hasSymbol.value = password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
+  }
+
+  bool get isPasswordValid =>
+      hasMinLength.value &&
+      hasLowercase.value &&
+      hasUppercase.value &&
+      hasNumber.value &&
+      hasSymbol.value;
+
+  void resetForm() {
+    formKey.value.currentState?.reset();
+    emailController.value.clear();
+    passwordController.value.clear();
+    hasMinLength.value = false;
+    hasLowercase.value = false;
+    hasUppercase.value = false;
+    hasNumber.value = false;
+    hasSymbol.value = false;
+    isPasswordFocused.value = false;
+  }
+
   @override
   void onClose() {
+    passwordController.value.removeListener(_validatePasswordRealtime);
     emailController.value.dispose();
     passwordController.value.dispose();
     super.onClose();
@@ -45,8 +93,22 @@ class SignInController extends GetxController {
     return null;
   }
 
+  void triggerShake() {
+    shakePasswordRequirements.value = true;
+    Future.delayed(const Duration(milliseconds: 500), () {
+      shakePasswordRequirements.value = false;
+    });
+  }
+
   // Sign in with email and password
   Future<void> signInWithEmail() async {
+    // Check password requirements first
+    if (!isPasswordValid && passwordController.value.text.isNotEmpty) {
+      isPasswordFocused.value = true;
+      triggerShake();
+      return;
+    }
+
     if (!formKey.value.currentState!.validate()) {
       return;
     }
@@ -61,6 +123,7 @@ class SignInController extends GetxController {
 
       if (response.user != null) {
         logger.i("Sign in with email successful");
+        resetForm();
         Get.snackbar(
           'Success',
           'Successfully signed in!',
@@ -91,6 +154,7 @@ class SignInController extends GetxController {
 
       if (response != null && response.user != null) {
         logger.i("Sign in with Google successful");
+        resetForm();
         Get.snackbar(
           'Success',
           'Successfully signed in with Google!',

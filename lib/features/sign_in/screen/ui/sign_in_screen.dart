@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -63,18 +65,97 @@ class SignInScreen extends GetView<SignInController> {
                 SizedBox(height: 16.h),
 
                 // Password Input Field
-                CustomTextEditingWidget(
-                  label: 'Password',
-                  controller: controller.passwordController.value,
-                  hint: 'Enter your password',
-                  isPassword: true,
-                  prefixIcon: const Icon(Icons.lock_outlined),
-                  contentPadding: EdgeInsets.symmetric(
-                    vertical: 16.h,
-                    horizontal: 12.w,
+                Focus(
+                  onFocusChange: (hasFocus) {
+                    controller.isPasswordFocused.value = hasFocus;
+                  },
+                  child: CustomTextEditingWidget(
+                    label: 'Password',
+                    controller: controller.passwordController.value,
+                    hint: 'Enter your password',
+                    isPassword: true,
+                    prefixIcon: const Icon(Icons.lock_outlined),
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: 16.h,
+                      horizontal: 12.w,
+                    ),
+                    validator: controller.validatePassword,
                   ),
-                  validator: controller.validatePassword,
                 ),
+
+                // Password Requirements with Animation
+                Obx(() => AnimatedSize(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                      child: controller.isPasswordFocused.value
+                          ? Column(
+                              children: [
+                                SizedBox(height: 12.h),
+                                TweenAnimationBuilder<double>(
+                                  tween: Tween(
+                                    begin: 0.0,
+                                    end: controller
+                                            .shakePasswordRequirements.value
+                                        ? 1.0
+                                        : 0.0,
+                                  ),
+                                  duration: const Duration(milliseconds: 300),
+                                  builder: (context, value, child) {
+                                    return Transform.translate(
+                                      offset: Offset(
+                                        10 * sin(value * pi * 2),
+                                        0,
+                                      ),
+                                      child: child,
+                                    );
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(12.w),
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[100],
+                                      borderRadius: BorderRadius.circular(8.r),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Password should contain',
+                                          style: TextStyle(
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.grey[700],
+                                          ),
+                                        ),
+                                        SizedBox(height: 8.h),
+                                        _buildRequirementRow(
+                                          'At least 6 characters',
+                                          controller.hasMinLength.value,
+                                        ),
+                                        _buildRequirementRow(
+                                          'At least 1 lowercase letter (a..z)',
+                                          controller.hasLowercase.value,
+                                        ),
+                                        _buildRequirementRow(
+                                          'At least 1 uppercase letter (A..Z)',
+                                          controller.hasUppercase.value,
+                                        ),
+                                        _buildRequirementRow(
+                                          'At least 1 number (0..9)',
+                                          controller.hasNumber.value,
+                                        ),
+                                        _buildRequirementRow(
+                                          'At least 1 symbol (!@#\$%^&*)',
+                                          controller.hasSymbol.value,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : const SizedBox.shrink(),
+                    )),
 
                 SizedBox(height: 24.h),
 
@@ -208,6 +289,29 @@ class SignInScreen extends GetView<SignInController> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildRequirementRow(String text, bool isMet) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 2.h),
+      child: Row(
+        children: [
+          Icon(
+            isMet ? Icons.check : Icons.close,
+            size: 16.sp,
+            color: isMet ? Colors.blue : Colors.red,
+          ),
+          SizedBox(width: 8.w),
+          Text(
+            text,
+            style: TextStyle(
+              fontSize: 12.sp,
+              color: isMet ? Colors.blue : Colors.red,
+            ),
+          ),
+        ],
       ),
     );
   }
