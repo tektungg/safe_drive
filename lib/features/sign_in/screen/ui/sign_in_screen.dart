@@ -7,7 +7,6 @@ import 'package:safe_drive/features/sign_in/screen/components/sign_in_action_but
 import 'package:safe_drive/features/sign_in/screen/components/sign_in_form_component.dart';
 import 'package:safe_drive/shared/widgets/auth_footer_widget.dart';
 import 'package:safe_drive/shared/widgets/auth_header_widget.dart';
-import 'package:safe_drive/shared/widgets/custom_app_bar_widget.dart';
 
 class SignInScreen extends GetView<SignInController> {
   const SignInScreen({super.key});
@@ -15,9 +14,6 @@ class SignInScreen extends GetView<SignInController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBarWidget(
-        title: 'Sign In',
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
