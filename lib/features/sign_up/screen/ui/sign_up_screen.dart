@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:safe_drive/features/sign_in/screen/ui/sign_in_screen.dart';
 import 'package:safe_drive/features/sign_up/controllers/sign_up_controller.dart';
 import 'package:safe_drive/shared/widgets/custom_app_bar_widget.dart';
 import 'package:safe_drive/shared/widgets/custom_text_editing_widget.dart';
@@ -15,7 +16,7 @@ class SignUpScreen extends GetView<SignUpController> {
         title: 'Sign Up',
       ),
       body: SafeArea(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
           child: Form(
             key: controller.formKey.value,
@@ -76,123 +77,122 @@ class SignUpScreen extends GetView<SignUpController> {
 
                 SizedBox(height: 24.h),
 
-              // Sign Up Button
-              ElevatedButton(
-                onPressed: () {
-                  // TODO: Implement email/password sign up
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(vertical: 16.h),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
-                  elevation: 2,
-                ),
-                child: Text(
-                  'Sign Up',
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-
-              SizedBox(height: 24.h),
-
-              // Divider with "OR"
-              Row(
-                children: [
-                  Expanded(child: Divider(color: Colors.grey[300])),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: Text(
-                      'OR',
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
+                // Sign Up Button
+                ElevatedButton(
+                  onPressed: () {
+                    // TODO: Implement email/password sign up
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(vertical: 16.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.r),
                     ),
+                    elevation: 2,
                   ),
-                  Expanded(child: Divider(color: Colors.grey[300])),
-                ],
-              ),
-
-              SizedBox(height: 24.h),
-
-              // Google Sign In Button
-              Obx(() => ElevatedButton.icon(
-                    onPressed: controller.isLoading.value
-                        ? null
-                        : () => controller.signInWithGoogle(),
-                    icon: controller.isLoading.value
-                        ? SizedBox(
-                            width: 20.w,
-                            height: 20.h,
-                            child: const CircularProgressIndicator(
-                              strokeWidth: 2,
-                              valueColor:
-                                  AlwaysStoppedAnimation<Color>(Colors.white),
-                            ),
-                          )
-                        : Image.network(
-                            'https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg',
-                            width: 24.w,
-                            height: 24.h,
-                          ),
-                    label: Text(
-                      controller.isLoading.value
-                          ? 'Signing in...'
-                          : 'Continue with Google',
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      foregroundColor: Colors.black87,
-                      padding: EdgeInsets.symmetric(vertical: 16.h),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.r),
-                        side: BorderSide(color: Colors.grey[300]!),
-                      ),
-                      elevation: 1,
-                    ),
-                  )),
-
-              const Spacer(),
-
-              // Already have an account
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Already have an account? ',
+                  child: Text(
+                    'Sign Up',
                     style: TextStyle(
-                      fontSize: 14.sp,
-                      color: Colors.grey[600],
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      // TODO: Navigate to sign in screen
-                      Get.back();
-                    },
-                    child: Text(
-                      'Sign In',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: Colors.blue,
-                        fontWeight: FontWeight.w600,
+                ),
+
+                SizedBox(height: 24.h),
+
+                // Divider with "OR"
+                Row(
+                  children: [
+                    Expanded(child: Divider(color: Colors.grey[300])),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      child: Text(
+                        'OR',
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20.h),
+                    Expanded(child: Divider(color: Colors.grey[300])),
+                  ],
+                ),
+
+                SizedBox(height: 24.h),
+
+                // Google Sign In Button
+                Obx(() => ElevatedButton.icon(
+                      onPressed: controller.isLoading.value
+                          ? null
+                          : () => controller.signInWithGoogle(),
+                      icon: controller.isLoading.value
+                          ? SizedBox(
+                              width: 20.w,
+                              height: 20.h,
+                              child: const CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(Colors.white),
+                              ),
+                            )
+                          : Image.network(
+                              'https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg',
+                              width: 24.w,
+                              height: 24.h,
+                            ),
+                      label: Text(
+                        controller.isLoading.value
+                            ? 'Signing in...'
+                            : 'Continue with Google',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        foregroundColor: Colors.black87,
+                        padding: EdgeInsets.symmetric(vertical: 16.h),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                          side: BorderSide(color: Colors.grey[300]!),
+                        ),
+                        elevation: 1,
+                      ),
+                    )),
+
+                SizedBox(height: 40.h),
+
+                // Already have an account
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Already have an account? ',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(const SignInScreen());
+                      },
+                      child: Text(
+                        'Sign In',
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          color: Colors.blue,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20.h),
               ],
             ),
           ),
