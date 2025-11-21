@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:safe_drive/configs/routes/route.dart';
+import 'package:safe_drive/shared/widgets/custom_loading_overlay_widget.dart';
 import 'package:safe_drive/shared/widgets/custom_toast_widget.dart';
 import 'package:safe_drive/utils/helpers/supabase_error_handler.dart';
 import 'package:safe_drive/utils/services/supabase_service.dart';
@@ -122,6 +123,7 @@ class SignUpController extends GetxController {
 
     try {
       isLoading.value = true;
+      CustomLoadingOverlayWidget.show(message: 'Loading...');
 
       final response = await _supabaseService.signUpWithEmailPassword(
         email: emailController.value.text.trim(),
@@ -129,11 +131,13 @@ class SignUpController extends GetxController {
       );
 
       if (response.user != null) {
+        CustomLoadingOverlayWidget.hide();
         // Navigate to profile setup screen
         Get.offAllNamed(Routes.profileSetupRoute);
       }
     } catch (e) {
       logger.e("Error signing up with email: $e");
+      CustomLoadingOverlayWidget.hide();
       CustomToast.show(
         message: SupabaseErrorHandler.parseError(e),
         type: ToastType.error,

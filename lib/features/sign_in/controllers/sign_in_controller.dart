@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:safe_drive/configs/routes/route.dart';
+import 'package:safe_drive/shared/widgets/custom_loading_overlay_widget.dart';
 import 'package:safe_drive/shared/widgets/custom_toast_widget.dart';
 import 'package:safe_drive/utils/helpers/supabase_error_handler.dart';
 import 'package:safe_drive/utils/services/supabase_service.dart';
@@ -106,6 +107,7 @@ class SignInController extends GetxController {
 
     try {
       isLoading.value = true;
+      CustomLoadingOverlayWidget.show(message: 'Signing in...');
 
       final response = await _supabaseService.signInWithEmailPassword(
         email: emailController.value.text.trim(),
@@ -114,6 +116,7 @@ class SignInController extends GetxController {
 
       if (response.user != null) {
         logger.i("Sign in with email successful");
+        CustomLoadingOverlayWidget.hide();
         CustomToast.show(
           message: 'Successfully signed in!',
           type: ToastType.success,
@@ -124,6 +127,7 @@ class SignInController extends GetxController {
       }
     } catch (e) {
       logger.e("Error signing in with email: $e");
+      CustomLoadingOverlayWidget.hide();
       CustomToast.show(
         message: SupabaseErrorHandler.parseError(e),
         type: ToastType.error,
@@ -137,11 +141,13 @@ class SignInController extends GetxController {
   Future<void> signInWithGoogle() async {
     try {
       isGoogleLoading.value = true;
+      CustomLoadingOverlayWidget.show(message: 'Signing in with Google...');
 
       final response = await _supabaseService.signInWithGoogle();
 
       if (response != null && response.user != null) {
         logger.i("Sign in with Google successful");
+        CustomLoadingOverlayWidget.hide();
         CustomToast.show(
           message: 'Successfully signed in with Google!',
           type: ToastType.success,
@@ -151,9 +157,11 @@ class SignInController extends GetxController {
         Get.offAllNamed(Routes.homeRoute);
       } else {
         logger.w("Google sign in cancelled");
+        CustomLoadingOverlayWidget.hide();
       }
     } catch (e) {
       logger.e("Error signing in with Google: $e");
+      CustomLoadingOverlayWidget.hide();
       CustomToast.show(
         message: SupabaseErrorHandler.parseError(e),
         type: ToastType.error,

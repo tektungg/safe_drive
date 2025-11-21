@@ -6,6 +6,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:safe_drive/configs/routes/route.dart';
 import 'package:safe_drive/shared/widgets/custom_bottom_sheet_widget.dart';
+import 'package:safe_drive/shared/widgets/custom_loading_overlay_widget.dart';
 import 'package:safe_drive/shared/widgets/custom_toast_widget.dart';
 import 'package:safe_drive/utils/helpers/supabase_error_handler.dart';
 import 'package:safe_drive/utils/services/supabase_service.dart';
@@ -184,6 +185,7 @@ class ProfileSetupController extends GetxController {
 
     try {
       isLoading.value = true;
+      CustomLoadingOverlayWidget.show(message: 'Creating your account...');
 
       // Upload image if selected
       String? avatarUrl;
@@ -198,6 +200,7 @@ class ProfileSetupController extends GetxController {
           picture: avatarUrl);
 
       logger.i("Account created successfully");
+      CustomLoadingOverlayWidget.hide();
       CustomToast.show(
         message: 'Account created successfully!',
         type: ToastType.success,
@@ -208,6 +211,7 @@ class ProfileSetupController extends GetxController {
       Get.offAllNamed(Routes.homeRoute);
     } catch (e) {
       logger.e("Error saving profile: $e");
+      CustomLoadingOverlayWidget.hide();
       CustomToast.show(
         message: SupabaseErrorHandler.parseError(e),
         type: ToastType.error,
