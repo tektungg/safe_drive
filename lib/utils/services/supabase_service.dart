@@ -37,14 +37,56 @@ class SupabaseService extends GetxService {
     await client.auth.signOut();
   }
 
+  // Sign up with email and password
+  Future<AuthResponse> signUpWithEmailPassword({
+    required String email,
+    required String password,
+    String? name,
+  }) async {
+    try {
+      final response = await client.auth.signUp(
+        email: email,
+        password: password,
+        data: name != null ? {'full_name': name} : null,
+      );
+
+      logger.i("Sign up with email successful: ${response.user?.email}");
+      return response;
+    } catch (e) {
+      logger.e("Error during email sign up: $e");
+      rethrow;
+    }
+  }
+
+  // Sign in with email and password
+  Future<AuthResponse> signInWithEmailPassword({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final response = await client.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
+
+      logger.i("Sign in with email successful: ${response.user?.email}");
+      return response;
+    } catch (e) {
+      logger.e("Error during email sign in: $e");
+      rethrow;
+    }
+  }
+
   // Sign in with Google
   Future<AuthResponse?> signInWithGoogle() async {
     try {
       // Web Client ID dari Google Console (untuk iOS gunakan iOS Client ID)
-      const webClientId = '391478746861-2b15soo5o1tp8vu8p8adfgc2m2du4ckm.apps.googleusercontent.com';
+      const webClientId =
+          '391478746861-2b15soo5o1tp8vu8p8adfgc2m2du4ckm.apps.googleusercontent.com';
 
       // iOS Client ID dari Info.plist
-      const iosClientId = '391478746861-2dv6s327qvamnphnvpngat2lg98o8c3b.apps.googleusercontent.com';
+      const iosClientId =
+          '391478746861-2dv6s327qvamnphnvpngat2lg98o8c3b.apps.googleusercontent.com';
 
       final GoogleSignIn googleSignIn = GoogleSignIn(
         clientId: iosClientId,

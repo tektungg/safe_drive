@@ -10,7 +10,7 @@ class SplashController extends GetxController {
       if (HiveService.getBearer() != null) {
         Get.offAllNamed(Routes.crudRoute);
       } else {
-        Get.offNamed(Routes.signUpRoute);
+        Get.offNamed(Routes.signInRoute);
       }
     });
   }

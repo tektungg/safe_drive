@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:safe_drive/constants/asset_constant.dart';
-import 'package:safe_drive/features/sign_in/screen/ui/sign_in_screen.dart';
 import 'package:safe_drive/features/sign_up/controllers/sign_up_controller.dart';
 import 'package:safe_drive/shared/widgets/custom_app_bar_widget.dart';
 import 'package:safe_drive/shared/widgets/custom_text_editing_widget.dart';
@@ -46,6 +44,22 @@ class SignUpScreen extends GetView<SignUpController> {
 
                 SizedBox(height: 60.h),
 
+                // Name Input Field
+                CustomTextEditingWidget(
+                  label: 'Name',
+                  controller: controller.nameController.value,
+                  hint: 'Enter your name',
+                  keyboardType: TextInputType.name,
+                  prefixIcon: const Icon(Icons.person_outlined),
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 16.h,
+                    horizontal: 12.w,
+                  ),
+                  validator: controller.validateName,
+                ),
+
+                SizedBox(height: 16.h),
+
                 // Email Input Field
                 CustomTextEditingWidget(
                   label: 'Email',
@@ -76,60 +90,39 @@ class SignUpScreen extends GetView<SignUpController> {
                   validator: controller.validatePassword,
                 ),
 
+                SizedBox(height: 16.h),
+
+                // Confirm Password Input Field
+                CustomTextEditingWidget(
+                  label: 'Confirm Password',
+                  controller: controller.confirmPasswordController.value,
+                  hint: 'Confirm your password',
+                  isPassword: true,
+                  prefixIcon: const Icon(Icons.lock_outlined),
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 16.h,
+                    horizontal: 12.w,
+                  ),
+                  validator: controller.validateConfirmPassword,
+                ),
+
                 SizedBox(height: 24.h),
 
                 // Sign Up Button
-                ElevatedButton(
-                  onPressed: () {
-                    // TODO: Implement email/password sign up
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    foregroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(vertical: 16.h),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.r),
-                    ),
-                    elevation: 2,
-                  ),
-                  child: Text(
-                    'Sign Up',
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-
-                SizedBox(height: 24.h),
-
-                // Divider with "OR"
-                Row(
-                  children: [
-                    Expanded(child: Divider(color: Colors.grey[300])),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      child: Text(
-                        'OR',
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                    Expanded(child: Divider(color: Colors.grey[300])),
-                  ],
-                ),
-
-                SizedBox(height: 24.h),
-
-                // Google Sign In Button
-                Obx(() => ElevatedButton.icon(
+                Obx(() => ElevatedButton(
                       onPressed: controller.isLoading.value
                           ? null
-                          : () => controller.signInWithGoogle(),
-                      icon: controller.isLoading.value
+                          : () => controller.signUpWithEmail(),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        foregroundColor: Colors.white,
+                        padding: EdgeInsets.symmetric(vertical: 16.h),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        elevation: 2,
+                      ),
+                      child: controller.isLoading.value
                           ? SizedBox(
                               width: 20.w,
                               height: 20.h,
@@ -139,30 +132,13 @@ class SignUpScreen extends GetView<SignUpController> {
                                     AlwaysStoppedAnimation<Color>(Colors.white),
                               ),
                             )
-                          : Image.asset(
-                              AssetConstants.iconGoogle,
-                              width: 24.w,
-                              height: 24.h,
+                          : Text(
+                              'Sign Up',
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
-                      label: Text(
-                        controller.isLoading.value
-                            ? 'Signing in...'
-                            : 'Continue with Google',
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        foregroundColor: Colors.black87,
-                        padding: EdgeInsets.symmetric(vertical: 16.h),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                          side: BorderSide(color: Colors.grey[300]!),
-                        ),
-                        elevation: 1,
-                      ),
                     )),
 
                 SizedBox(height: 40.h),
@@ -180,7 +156,7 @@ class SignUpScreen extends GetView<SignUpController> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.to(const SignInScreen());
+                        Get.back();
                       },
                       child: Text(
                         'Sign In',
