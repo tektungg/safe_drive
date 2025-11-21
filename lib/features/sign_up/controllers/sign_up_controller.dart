@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:safe_drive/configs/routes/route.dart';
 import 'package:safe_drive/utils/services/supabase_service.dart';
 import 'package:venturo_api_manager/loggers/logger.dart';
 
@@ -12,7 +13,6 @@ class SignUpController extends GetxController {
   final Rx<GlobalKey<FormState>> formKey = GlobalKey<FormState>().obs;
 
   // Text editing controllers
-  final Rx<TextEditingController> nameController = TextEditingController().obs;
   final Rx<TextEditingController> emailController = TextEditingController().obs;
   final Rx<TextEditingController> passwordController =
       TextEditingController().obs;
@@ -61,7 +61,6 @@ class SignUpController extends GetxController {
   @override
   void onClose() {
     passwordController.value.removeListener(_validatePasswordRealtime);
-    nameController.value.dispose();
     emailController.value.dispose();
     passwordController.value.dispose();
     confirmPasswordController.value.dispose();
@@ -69,13 +68,6 @@ class SignUpController extends GetxController {
   }
 
   // Validators
-  String? validateName(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please enter your name';
-    }
-    return null;
-  }
-
   String? validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return 'Please enter your email';
@@ -132,19 +124,18 @@ class SignUpController extends GetxController {
       final response = await _supabaseService.signUpWithEmailPassword(
         email: emailController.value.text.trim(),
         password: passwordController.value.text,
-        name: nameController.value.text.trim(),
       );
 
       if (response.user != null) {
         logger.i("Sign up with email successful");
         Get.snackbar(
           'Success',
-          'Account created successfully! Please check your email to verify your account.',
+          'Account created successfully!',
           snackPosition: SnackPosition.BOTTOM,
         );
 
-        // TODO: Navigate to sign in or home screen
-        // Get.offAllNamed(Routes.SIGN_IN);
+        // Navigate to profile setup screen
+        Get.offAllNamed(Routes.profileSetupRoute);
       }
     } catch (e) {
       logger.e("Error signing up with email: $e");

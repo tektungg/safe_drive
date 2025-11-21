@@ -5,6 +5,8 @@ import 'package:safe_drive/features/edit_profile/screen/ui/edit_profile_screen.d
 import 'package:safe_drive/features/home/bindings/home_binding.dart';
 import 'package:safe_drive/features/home/screen/ui/home_screen.dart';
 import 'package:safe_drive/features/no_connection/view/ui/no_connection_screen.dart';
+import 'package:safe_drive/features/profile_setup/bindings/profile_setup_binding.dart';
+import 'package:safe_drive/features/profile_setup/screen/ui/profile_setup_screen.dart';
 import 'package:safe_drive/features/scanner/bindings/scanner_binding.dart';
 import 'package:safe_drive/features/scanner/screen/ui/scanner_screen.dart';
 import 'package:safe_drive/features/setting/bindings/setting_binding.dart';
@@ -56,6 +58,11 @@ abstract class Pages {
       name: Routes.signUpRoute,
       page: () => const SignUpScreen(),
       binding: SignUpBinding(),
+    ),
+    GetPage(
+      name: Routes.profileSetupRoute,
+      page: () => const ProfileSetupScreen(),
+      binding: ProfileSetupBinding(),
     ),
   ];
 }

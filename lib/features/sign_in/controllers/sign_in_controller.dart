@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:safe_drive/configs/routes/route.dart';
 import 'package:safe_drive/utils/services/supabase_service.dart';
 import 'package:venturo_api_manager/loggers/logger.dart';
 
@@ -54,7 +55,6 @@ class SignInController extends GetxController {
       hasUppercase.value &&
       hasNumber.value &&
       hasSymbol.value;
-
 
   @override
   void onClose() {
@@ -118,8 +118,7 @@ class SignInController extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
         );
 
-        // TODO: Navigate to home screen
-        // Get.offAllNamed(Routes.HOME);
+        Get.offAllNamed(Routes.homeRoute);
       }
     } catch (e) {
       logger.e("Error signing in with email: $e");
@@ -148,8 +147,7 @@ class SignInController extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
         );
 
-        // TODO: Navigate to home screen
-        // Get.offAllNamed(Routes.HOME);
+        Get.offAllNamed(Routes.homeRoute);
       } else {
         logger.w("Google sign in cancelled");
       }

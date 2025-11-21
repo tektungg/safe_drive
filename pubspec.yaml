@@ -51,6 +51,8 @@ dependencies:
 
   venturo_api_manager: ^1.0.1
   vpack: ^1.0.0
+  image_picker: ^1.2.1
+  image_cropper: ^11.0.0
 
 dev_dependencies:
   build_runner: ^2.4.6

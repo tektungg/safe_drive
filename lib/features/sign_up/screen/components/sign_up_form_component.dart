@@ -12,18 +12,6 @@ class SignUpFormComponent extends GetView<SignUpController> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Name Input Field
-        CustomTextFormFieldWidget(
-          label: 'Name',
-          controller: controller.nameController.value,
-          hint: 'Enter your name',
-          keyboardType: TextInputType.name,
-          prefixIcon: const Icon(Icons.person_outlined),
-          validator: controller.validateName,
-        ),
-
-        SizedBox(height: 16.h),
-
         // Email Input Field
         CustomTextFormFieldWidget(
           label: 'Email',

@@ -41,19 +41,41 @@ class SupabaseService extends GetxService {
   Future<AuthResponse> signUpWithEmailPassword({
     required String email,
     required String password,
-    String? name,
   }) async {
     try {
       final response = await client.auth.signUp(
         email: email,
         password: password,
-        data: name != null ? {'full_name': name} : null,
       );
 
       logger.i("Sign up with email successful: ${response.user?.email}");
       return response;
     } catch (e) {
       logger.e("Error during email sign up: $e");
+      rethrow;
+    }
+  }
+
+  // Update user profile (name and avatar)
+  Future<UserResponse> updateUserProfile({
+    String? name,
+    String? avatarUrl,
+    String? picture,
+  }) async {
+    try {
+      final Map<String, dynamic> data = {};
+      if (name != null) data['full_name'] = name;
+      if (avatarUrl != null) data['avatar_url'] = avatarUrl;
+      if (picture != null) data['picture'] = picture;
+
+      final response = await client.auth.updateUser(
+        UserAttributes(data: data),
+      );
+
+      logger.i("User profile updated successfully");
+      return response;
+    } catch (e) {
+      logger.e("Error updating user profile: $e");
       rethrow;
     }
   }
