@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:safe_drive/features/home/controllers/home_controller.dart';
+import 'package:safe_drive/shared/styles/color_style.dart';
 import 'package:safe_drive/shared/widgets/custom_app_bar_widget.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -35,7 +36,7 @@ class HomeScreen extends GetView<HomeController> {
                       style: TextStyle(
                         fontSize: 28.sp,
                         fontWeight: FontWeight.w700,
-                        color: const Color(0xFF1F2937),
+                        color: ColorStyle.textPrimary,
                       ),
                     ),
                     SizedBox(height: 4.h),
@@ -44,7 +45,7 @@ class HomeScreen extends GetView<HomeController> {
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w400,
-                        color: const Color(0xFF6B7280),
+                        color: ColorStyle.textSecondary,
                       ),
                     ),
                   ],
@@ -60,7 +61,7 @@ class HomeScreen extends GetView<HomeController> {
                     icon: Icons.directions_car_rounded,
                     label: 'Total Trips',
                     value: '0',
-                    color: const Color(0xFF3B82F6),
+                    color: ColorStyle.primary,
                   ),
                 ),
                 SizedBox(width: 16.w),
@@ -69,7 +70,7 @@ class HomeScreen extends GetView<HomeController> {
                     icon: Icons.timer_rounded,
                     label: 'Driving Hours',
                     value: '0h',
-                    color: const Color(0xFF10B981),
+                    color: ColorStyle.success,
                   ),
                 ),
               ],
@@ -84,7 +85,7 @@ class HomeScreen extends GetView<HomeController> {
                     icon: Icons.route_rounded,
                     label: 'Distance',
                     value: '0 km',
-                    color: const Color(0xFFF59E0B),
+                    color: ColorStyle.warning,
                   ),
                 ),
                 SizedBox(width: 16.w),
@@ -93,7 +94,7 @@ class HomeScreen extends GetView<HomeController> {
                     icon: Icons.star_rounded,
                     label: 'Safety Score',
                     value: '0',
-                    color: const Color(0xFF8B5CF6),
+                    color: ColorStyle.secondary,
                   ),
                 ),
               ],
@@ -107,7 +108,7 @@ class HomeScreen extends GetView<HomeController> {
               style: TextStyle(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w700,
-                color: const Color(0xFF1F2937),
+                color: ColorStyle.textPrimary,
               ),
             ),
             SizedBox(height: 16.h),
@@ -116,10 +117,10 @@ class HomeScreen extends GetView<HomeController> {
             Container(
               padding: EdgeInsets.symmetric(vertical: 48.h),
               decoration: BoxDecoration(
-                color: const Color(0xFFF9FAFB),
+                color: ColorStyle.backgroundDark,
                 borderRadius: BorderRadius.circular(16.r),
                 border: Border.all(
-                  color: const Color(0xFFE5E7EB),
+                  color: ColorStyle.border,
                   width: 1,
                 ),
               ),
@@ -129,7 +130,7 @@ class HomeScreen extends GetView<HomeController> {
                     Icon(
                       Icons.history_rounded,
                       size: 48.sp,
-                      color: const Color(0xFF9CA3AF),
+                      color: ColorStyle.gray400,
                     ),
                     SizedBox(height: 12.h),
                     Text(
@@ -137,7 +138,7 @@ class HomeScreen extends GetView<HomeController> {
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
-                        color: const Color(0xFF6B7280),
+                        color: ColorStyle.textSecondary,
                       ),
                     ),
                     SizedBox(height: 4.h),
@@ -146,7 +147,7 @@ class HomeScreen extends GetView<HomeController> {
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
-                        color: const Color(0xFF9CA3AF),
+                        color: ColorStyle.textTertiary,
                       ),
                     ),
                   ],
@@ -162,7 +163,7 @@ class HomeScreen extends GetView<HomeController> {
               style: TextStyle(
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w700,
-                color: const Color(0xFF1F2937),
+                color: ColorStyle.textPrimary,
               ),
             ),
             SizedBox(height: 16.h),
@@ -171,7 +172,7 @@ class HomeScreen extends GetView<HomeController> {
               icon: Icons.camera_alt_rounded,
               title: 'Start Scanner',
               subtitle: 'Scan traffic signs',
-              color: const Color(0xFF3B82F6),
+              color: ColorStyle.primary,
               onTap: () {},
             ),
 
@@ -181,7 +182,7 @@ class HomeScreen extends GetView<HomeController> {
               icon: Icons.settings_rounded,
               title: 'Settings',
               subtitle: 'Manage your preferences',
-              color: const Color(0xFF6B7280),
+              color: ColorStyle.textSecondary,
               onTap: () {},
             ),
           ],
@@ -237,7 +238,7 @@ class _StatCard extends StatelessWidget {
             style: TextStyle(
               fontSize: 12.sp,
               fontWeight: FontWeight.w500,
-              color: const Color(0xFF6B7280),
+              color: ColorStyle.textSecondary,
             ),
           ),
           SizedBox(height: 4.h),
@@ -246,7 +247,7 @@ class _StatCard extends StatelessWidget {
             style: TextStyle(
               fontSize: 20.sp,
               fontWeight: FontWeight.w700,
-              color: const Color(0xFF1F2937),
+              color: ColorStyle.textPrimary,
             ),
           ),
         ],
@@ -273,22 +274,22 @@ class _QuickActionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: ColorStyle.transparent,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(16.r),
         child: Container(
           padding: EdgeInsets.all(16.r),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: ColorStyle.white,
             borderRadius: BorderRadius.circular(16.r),
             border: Border.all(
-              color: const Color(0xFFE5E7EB),
+              color: ColorStyle.border,
               width: 1,
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
+                color: ColorStyle.shadowLight,
                 blurRadius: 10,
                 offset: const Offset(0, 2),
               ),
@@ -318,7 +319,7 @@ class _QuickActionCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
-                        color: const Color(0xFF1F2937),
+                        color: ColorStyle.textPrimary,
                       ),
                     ),
                     SizedBox(height: 2.h),
@@ -327,7 +328,7 @@ class _QuickActionCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w400,
-                        color: const Color(0xFF6B7280),
+                        color: ColorStyle.textSecondary,
                       ),
                     ),
                   ],
@@ -336,7 +337,7 @@ class _QuickActionCard extends StatelessWidget {
               Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 16.sp,
-                color: const Color(0xFF9CA3AF),
+                color: ColorStyle.gray400,
               ),
             ],
           ),

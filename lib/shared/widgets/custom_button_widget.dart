@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:safe_drive/shared/styles/color_style.dart';
 
 /// A fully customizable button widget that supports various styles and states.
 ///
@@ -226,20 +227,20 @@ class CustomButtonWidget extends StatelessWidget {
 
     // Determine colors based on state and style
     final Color effectiveBackgroundColor = effectiveDisabled
-        ? (disabledBackgroundColor ?? Colors.grey[300]!)
+        ? (disabledBackgroundColor ?? ColorStyle.gray300)
         : (isOutlined
-            ? (backgroundColor ?? Colors.transparent)
-            : (backgroundColor ?? Colors.blue));
+            ? (backgroundColor ?? ColorStyle.transparent)
+            : (backgroundColor ?? ColorStyle.primary));
 
     final Color effectiveTextColor = effectiveDisabled
-        ? (disabledTextColor ?? Colors.grey[500]!)
+        ? (disabledTextColor ?? ColorStyle.gray500)
         : (isOutlined
-            ? (textColor ?? Colors.blue)
-            : (textColor ?? Colors.white));
+            ? (textColor ?? ColorStyle.primary)
+            : (textColor ?? ColorStyle.textOnPrimary));
 
     final Color effectiveBorderColor = effectiveDisabled
-        ? (disabledBackgroundColor ?? Colors.grey[300]!)
-        : (borderColor ?? (isOutlined ? Colors.blue : Colors.transparent));
+        ? (disabledBackgroundColor ?? ColorStyle.gray300)
+        : (borderColor ?? (isOutlined ? ColorStyle.primary : ColorStyle.transparent));
 
     final Color effectiveLoadingColor =
         loadingIndicatorColor ?? effectiveTextColor;

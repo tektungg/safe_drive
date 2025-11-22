@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:safe_drive/shared/styles/color_style.dart';
 import 'package:safe_drive/shared/widgets/custom_divider_widget.dart';
 
 /// A fully customizable bottom sheet widget with modern styling.
@@ -231,7 +232,7 @@ class CustomBottomSheet {
       isDismissible: isDismissible,
       enableDrag: enableDrag,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: ColorStyle.transparent,
       elevation: 0,
     );
   }
@@ -266,9 +267,9 @@ class _BottomSheetContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveBackgroundColor = backgroundColor ?? Colors.white;
-    final effectiveTitleColor = titleColor ?? const Color(0xFF1A1A2E);
-    final effectiveSubtitleColor = subtitleColor ?? const Color(0xFF6B7280);
+    final effectiveBackgroundColor = backgroundColor ?? ColorStyle.white;
+    final effectiveTitleColor = titleColor ?? ColorStyle.textPrimary;
+    final effectiveSubtitleColor = subtitleColor ?? ColorStyle.textSecondary;
     final effectiveBorderRadius = borderRadius ?? 28.r;
     final effectivePadding = padding ??
         EdgeInsets.only(
@@ -286,7 +287,7 @@ class _BottomSheetContent extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
+            color: ColorStyle.shadow,
             blurRadius: 24,
             offset: const Offset(0, -8),
             spreadRadius: 0,
@@ -308,7 +309,7 @@ class _BottomSheetContent extends StatelessWidget {
                     width: 36.w,
                     height: 4.h,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFE5E7EB),
+                      color: ColorStyle.gray300,
                       borderRadius: BorderRadius.circular(100),
                     ),
                   ),
@@ -350,7 +351,7 @@ class _BottomSheetContent extends StatelessWidget {
               else if (actions != null)
                 Container(
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF9FAFB),
+                    color: ColorStyle.gray50,
                     borderRadius: BorderRadius.circular(16.r),
                   ),
                   child: Column(
@@ -400,12 +401,12 @@ class _ActionTileState extends State<_ActionTile> {
 
     // Colors based on danger state
     final Color primaryColor =
-        action.isDanger ? const Color(0xFFEF4444) : const Color(0xFF3B82F6);
+        action.isDanger ? ColorStyle.danger : ColorStyle.primary;
     final Color iconBgColor =
-        action.isDanger ? const Color(0xFFFEE2E2) : const Color(0xFFEFF6FF);
+        action.isDanger ? ColorStyle.dangerContainer : ColorStyle.primaryContainer;
     final Color effectiveIconColor = action.iconColor ?? primaryColor;
     final Color effectiveLabelColor = action.labelColor ??
-        (action.isDanger ? primaryColor : const Color(0xFF1F2937));
+        (action.isDanger ? primaryColor : ColorStyle.textPrimary);
 
     return Column(
       children: [
@@ -427,7 +428,7 @@ class _ActionTileState extends State<_ActionTile> {
               horizontal: 16.w,
             ),
             decoration: BoxDecoration(
-              color: _isPressed ? const Color(0xFFF3F4F6) : Colors.transparent,
+              color: _isPressed ? ColorStyle.gray100 : ColorStyle.transparent,
               borderRadius: BorderRadius.circular(12.r),
             ),
             child: Row(
@@ -468,7 +469,7 @@ class _ActionTileState extends State<_ActionTile> {
                           style: TextStyle(
                             fontSize: 13.sp,
                             fontWeight: FontWeight.w400,
-                            color: const Color(0xFF9CA3AF),
+                            color: ColorStyle.textTertiary,
                             height: 1.3,
                           ),
                         ),
@@ -481,12 +482,12 @@ class _ActionTileState extends State<_ActionTile> {
                   width: 32.w,
                   height: 32.h,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF3F4F6),
+                    color: ColorStyle.gray100,
                     borderRadius: BorderRadius.circular(8.r),
                   ),
                   child: Icon(
                     Icons.arrow_forward_ios_rounded,
-                    color: const Color(0xFF9CA3AF),
+                    color: ColorStyle.textTertiary,
                     size: 14.sp,
                   ),
                 ),
@@ -498,8 +499,8 @@ class _ActionTileState extends State<_ActionTile> {
         if (widget.showDivider)
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: const CustomDividerWidget(
-              lineColor: Color(0xFFE5E7EB),
+            child: CustomDividerWidget(
+              lineColor: ColorStyle.gray300,
               thickness: 1,
             ),
           ),

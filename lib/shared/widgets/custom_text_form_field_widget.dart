@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:safe_drive/shared/styles/color_style.dart';
 
 /// A modern and elegant text form field widget with comprehensive customization.
 ///
@@ -319,15 +320,15 @@ class _CustomTextFormFieldWidgetState extends State<CustomTextFormFieldWidget> {
   @override
   Widget build(BuildContext context) {
     final effectiveBorderRadius = widget.borderRadius ?? 12.r;
-    final effectiveFillColor = widget.fillColor ?? Colors.grey[50];
+    final effectiveFillColor = widget.fillColor ?? ColorStyle.gray50;
     final effectiveEnabledBorderColor =
-        widget.enabledBorderColor ?? Colors.grey[300];
+        widget.enabledBorderColor ?? ColorStyle.border;
     final effectiveFocusedBorderColor =
-        widget.focusedBorderColor ?? Colors.blue;
+        widget.focusedBorderColor ?? ColorStyle.primary;
     final effectiveErrorBorderColor =
-        widget.errorBorderColor ?? Colors.red[400];
-    final effectiveLabelColor = widget.labelColor ?? Colors.grey[700];
-    final effectiveHintColor = widget.hintColor ?? Colors.grey[400];
+        widget.errorBorderColor ?? ColorStyle.danger;
+    final effectiveLabelColor = widget.labelColor ?? ColorStyle.textSecondary;
+    final effectiveHintColor = widget.hintColor ?? ColorStyle.textHint;
     final effectiveFontSize = widget.fontSize ?? 14.sp;
 
     return Column(
@@ -368,14 +369,14 @@ class _CustomTextFormFieldWidgetState extends State<CustomTextFormFieldWidget> {
           style: TextStyle(
             fontSize: effectiveFontSize,
             fontWeight: FontWeight.w500,
-            color: widget.textColor ?? Colors.grey[900],
+            color: widget.textColor ?? ColorStyle.textPrimary,
             letterSpacing: 0.3,
           ),
           decoration: InputDecoration(
             isDense: true,
             hintText: widget.hint,
             filled: widget.filled,
-            fillColor: widget.enabled ? effectiveFillColor : Colors.grey[100],
+            fillColor: widget.enabled ? effectiveFillColor : ColorStyle.gray100,
             contentPadding: widget.contentPadding ??
                 EdgeInsets.symmetric(
                   horizontal: 16.w,
@@ -386,7 +387,7 @@ class _CustomTextFormFieldWidgetState extends State<CustomTextFormFieldWidget> {
                     padding: EdgeInsets.only(left: 12.w, right: 8.w),
                     child: IconTheme(
                       data: IconThemeData(
-                        color: Colors.grey[500],
+                        color: ColorStyle.gray500,
                         size: 22.sp,
                       ),
                       child: widget.prefixIcon!,
@@ -403,7 +404,7 @@ class _CustomTextFormFieldWidgetState extends State<CustomTextFormFieldWidget> {
                       _obscureText
                           ? Icons.visibility_outlined
                           : Icons.visibility_off_outlined,
-                      color: Colors.grey[500],
+                      color: ColorStyle.gray500,
                       size: 22.sp,
                     ),
                     onPressed: () {
@@ -422,7 +423,7 @@ class _CustomTextFormFieldWidgetState extends State<CustomTextFormFieldWidget> {
                       style: TextStyle(
                         fontSize: effectiveFontSize,
                         fontWeight: FontWeight.w600,
-                        color: Colors.grey[700],
+                        color: ColorStyle.textSecondary,
                       ),
                     ),
                   )
@@ -436,7 +437,7 @@ class _CustomTextFormFieldWidgetState extends State<CustomTextFormFieldWidget> {
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(effectiveBorderRadius),
               borderSide: BorderSide(
-                color: effectiveEnabledBorderColor!,
+                color: effectiveEnabledBorderColor,
                 width: 1.5,
               ),
             ),
@@ -450,7 +451,7 @@ class _CustomTextFormFieldWidgetState extends State<CustomTextFormFieldWidget> {
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(effectiveBorderRadius),
               borderSide: BorderSide(
-                color: effectiveErrorBorderColor!,
+                color: effectiveErrorBorderColor,
                 width: 1.5,
               ),
             ),
@@ -464,7 +465,7 @@ class _CustomTextFormFieldWidgetState extends State<CustomTextFormFieldWidget> {
             disabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(effectiveBorderRadius),
               borderSide: BorderSide(
-                color: Colors.grey[200]!,
+                color: ColorStyle.borderLight,
                 width: 1.5,
               ),
             ),

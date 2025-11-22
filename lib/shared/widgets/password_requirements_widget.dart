@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:safe_drive/shared/styles/color_style.dart';
 
 class PasswordRequirementsWidget extends StatelessWidget {
   final bool isVisible;
@@ -50,7 +51,7 @@ class PasswordRequirementsWidget extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.all(12.w),
                     decoration: BoxDecoration(
-                      color: Colors.grey[100],
+                      color: ColorStyle.backgroundGray,
                       borderRadius: BorderRadius.circular(8.r),
                     ),
                     child: Column(
@@ -61,7 +62,7 @@ class PasswordRequirementsWidget extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w600,
-                            color: Colors.grey[700],
+                            color: ColorStyle.textSecondary,
                           ),
                         ),
                         SizedBox(height: 8.h),
@@ -114,14 +115,14 @@ class _RequirementRow extends StatelessWidget {
           Icon(
             isMet ? Icons.check : Icons.close,
             size: 16.sp,
-            color: isMet ? Colors.blue : Colors.red,
+            color: isMet ? ColorStyle.success : ColorStyle.danger,
           ),
           SizedBox(width: 8.w),
           Text(
             text,
             style: TextStyle(
               fontSize: 12.sp,
-              color: isMet ? Colors.blue : Colors.red,
+              color: isMet ? ColorStyle.success : ColorStyle.danger,
             ),
           ),
         ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:safe_drive/features/profile_setup/controllers/profile_setup_controller.dart';
+import 'package:safe_drive/shared/styles/color_style.dart';
 import 'package:safe_drive/shared/widgets/custom_button_widget.dart';
 
 class ProfileSetupActionButtonComponent extends GetView<ProfileSetupController> {
@@ -12,8 +13,8 @@ class ProfileSetupActionButtonComponent extends GetView<ProfileSetupController> 
           text: 'Save Profile',
           onPressed: controller.saveProfile,
           isLoading: controller.isLoading.value,
-          backgroundColor: const Color(0xFF3B82F6),
-          textColor: Colors.white,
+          backgroundColor: ColorStyle.primary,
+          textColor: ColorStyle.textOnPrimary,
         ));
   }
 }

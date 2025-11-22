@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:safe_drive/shared/styles/color_style.dart';
 
 /// A fully customizable divider widget with optional text label.
 ///
@@ -141,8 +142,8 @@ class CustomDividerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveLineColor = lineColor ?? Colors.grey[300];
-    final effectiveTextColor = textColor ?? Colors.grey[600];
+    final effectiveLineColor = lineColor ?? ColorStyle.divider;
+    final effectiveTextColor = textColor ?? ColorStyle.textSecondary;
     final effectiveThickness = thickness ?? 1;
     final effectiveIndent = indent ?? 0;
     final effectiveEndIndent = endIndent ?? 0;

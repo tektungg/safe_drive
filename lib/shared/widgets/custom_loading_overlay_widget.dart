@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:safe_drive/shared/styles/color_style.dart';
 
 /// A fully customizable full-screen loading overlay widget with animations.
 ///
@@ -110,7 +111,7 @@ class CustomLoadingOverlayWidget extends StatefulWidget {
     return Get.generalDialog(
       barrierDismissible: barrierDismissible,
       barrierLabel: '',
-      barrierColor: Colors.transparent,
+      barrierColor: ColorStyle.transparent,
       transitionDuration: animationDuration,
       pageBuilder: (context, animation, secondaryAnimation) {
         return CustomLoadingOverlayWidget(
@@ -215,13 +216,13 @@ class _CustomLoadingOverlayWidgetState
   @override
   Widget build(BuildContext context) {
     final effectiveIndicatorColor =
-        widget.indicatorColor ?? const Color(0xFF3B82F6);
+        widget.indicatorColor ?? ColorStyle.primary;
     final effectiveIndicatorSize = widget.indicatorSize ?? 48.0;
     final effectiveBackgroundColor =
-        widget.backgroundColor ?? Colors.black.withValues(alpha: 0.5);
+        widget.backgroundColor ?? ColorStyle.overlayLight;
 
     return Material(
-      color: Colors.transparent,
+      color: ColorStyle.transparent,
       child: Container(
         width: double.infinity,
         height: double.infinity,
@@ -233,11 +234,11 @@ class _CustomLoadingOverlayWidgetState
               vertical: 24.h,
             ),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: ColorStyle.white,
               borderRadius: BorderRadius.circular(16.r),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.1),
+                  color: ColorStyle.shadowDark,
                   blurRadius: 20,
                   offset: const Offset(0, 10),
                 ),
@@ -264,7 +265,7 @@ class _CustomLoadingOverlayWidgetState
                         TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
-                          color: const Color(0xFF4B5563),
+                          color: ColorStyle.textPrimary,
                         ),
                     textAlign: TextAlign.center,
                   ),

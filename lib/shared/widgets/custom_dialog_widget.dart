@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:safe_drive/shared/styles/color_style.dart';
 
 /// A fully customizable dialog widget with consistent styling and animations.
 ///
@@ -151,7 +152,7 @@ class CustomDialogWidget extends StatefulWidget {
     return Get.generalDialog<T>(
       barrierDismissible: barrierDismissible,
       barrierLabel: 'Dialog',
-      barrierColor: Colors.black54,
+      barrierColor: ColorStyle.overlay,
       transitionDuration: animationDuration,
       pageBuilder: (context, animation, secondaryAnimation) {
         return CustomDialogWidget(
@@ -271,18 +272,18 @@ class _CustomDialogWidgetState extends State<CustomDialogWidget> {
         margin: EdgeInsets.symmetric(horizontal: 24.w),
         constraints: BoxConstraints(maxWidth: 340.w),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: ColorStyle.white,
           borderRadius: BorderRadius.circular(20.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
+              color: ColorStyle.shadowDark,
               blurRadius: 20,
               offset: const Offset(0, 10),
             ),
           ],
         ),
         child: Material(
-          color: Colors.transparent,
+          color: ColorStyle.transparent,
           child: Padding(
             padding: EdgeInsets.all(24.r),
             child: Column(
@@ -297,13 +298,13 @@ class _CustomDialogWidgetState extends State<CustomDialogWidget> {
                       child: Container(
                         padding: EdgeInsets.all(4.r),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFF3F4F6),
+                          color: ColorStyle.gray100,
                           borderRadius: BorderRadius.circular(8.r),
                         ),
                         child: Icon(
                           Icons.close_rounded,
                           size: 20.sp,
-                          color: const Color(0xFF6B7280),
+                          color: ColorStyle.textSecondary,
                         ),
                       ),
                     ),
@@ -336,7 +337,7 @@ class _CustomDialogWidgetState extends State<CustomDialogWidget> {
                         TextStyle(
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w700,
-                          color: const Color(0xFF1F2937),
+                          color: ColorStyle.textPrimary,
                         ),
                     textAlign: TextAlign.center,
                   ),
@@ -353,7 +354,7 @@ class _CustomDialogWidgetState extends State<CustomDialogWidget> {
                         TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w400,
-                          color: const Color(0xFF6B7280),
+                          color: ColorStyle.textSecondary,
                           height: 1.5,
                         ),
                     textAlign: TextAlign.center,
@@ -373,8 +374,8 @@ class _CustomDialogWidgetState extends State<CustomDialogWidget> {
                             onPressed: widget.onSecondaryPressed ??
                                 () => Get.back(),
                             backgroundColor: widget.secondaryButtonColor ??
-                                const Color(0xFFF3F4F6),
-                            textColor: const Color(0xFF4B5563),
+                                ColorStyle.gray100,
+                            textColor: ColorStyle.textPrimary,
                             isOutlined: true,
                           ),
                         ),
@@ -390,7 +391,7 @@ class _CustomDialogWidgetState extends State<CustomDialogWidget> {
                                 () => Get.back(),
                             backgroundColor: widget.primaryButtonColor ??
                                 dialogConfig.primaryButtonColor,
-                            textColor: Colors.white,
+                            textColor: ColorStyle.white,
                           ),
                         ),
                     ],
@@ -414,17 +415,17 @@ class _CustomDialogWidgetState extends State<CustomDialogWidget> {
         icon: null,
         iconColor: null,
         iconBackgroundColor: null,
-        primaryButtonColor: const Color(0xFF3B82F6),
+        primaryButtonColor: ColorStyle.primary,
       );
     }
 
     if (effectiveIcon != null) {
       return _DialogConfig(
         icon: effectiveIcon,
-        iconColor: effectiveIconColor ?? const Color(0xFF3B82F6),
+        iconColor: effectiveIconColor ?? ColorStyle.primary,
         iconBackgroundColor:
-            effectiveIconBgColor ?? const Color(0xFF3B82F6).withValues(alpha: 0.1),
-        primaryButtonColor: widget.primaryButtonColor ?? const Color(0xFF3B82F6),
+            effectiveIconBgColor ?? ColorStyle.primaryContainer,
+        primaryButtonColor: widget.primaryButtonColor ?? ColorStyle.primary,
       );
     }
 
@@ -432,37 +433,37 @@ class _CustomDialogWidgetState extends State<CustomDialogWidget> {
       case DialogType.success:
         return _DialogConfig(
           icon: Icons.check_circle_rounded,
-          iconColor: const Color(0xFF10B981),
-          iconBackgroundColor: const Color(0xFF10B981).withValues(alpha: 0.1),
-          primaryButtonColor: const Color(0xFF10B981),
+          iconColor: ColorStyle.success,
+          iconBackgroundColor: ColorStyle.successContainer,
+          primaryButtonColor: ColorStyle.success,
         );
       case DialogType.error:
         return _DialogConfig(
           icon: Icons.error_rounded,
-          iconColor: const Color(0xFFEF4444),
-          iconBackgroundColor: const Color(0xFFEF4444).withValues(alpha: 0.1),
-          primaryButtonColor: const Color(0xFFEF4444),
+          iconColor: ColorStyle.danger,
+          iconBackgroundColor: ColorStyle.dangerContainer,
+          primaryButtonColor: ColorStyle.danger,
         );
       case DialogType.warning:
         return _DialogConfig(
           icon: Icons.warning_rounded,
-          iconColor: const Color(0xFFF59E0B),
-          iconBackgroundColor: const Color(0xFFF59E0B).withValues(alpha: 0.1),
-          primaryButtonColor: const Color(0xFFF59E0B),
+          iconColor: ColorStyle.warning,
+          iconBackgroundColor: ColorStyle.warningContainer,
+          primaryButtonColor: ColorStyle.warning,
         );
       case DialogType.info:
         return _DialogConfig(
           icon: Icons.info_rounded,
-          iconColor: const Color(0xFF3B82F6),
-          iconBackgroundColor: const Color(0xFF3B82F6).withValues(alpha: 0.1),
-          primaryButtonColor: const Color(0xFF3B82F6),
+          iconColor: ColorStyle.info,
+          iconBackgroundColor: ColorStyle.infoContainer,
+          primaryButtonColor: ColorStyle.info,
         );
       case DialogType.question:
         return _DialogConfig(
           icon: Icons.help_rounded,
-          iconColor: const Color(0xFF8B5CF6),
-          iconBackgroundColor: const Color(0xFF8B5CF6).withValues(alpha: 0.1),
-          primaryButtonColor: const Color(0xFF8B5CF6),
+          iconColor: ColorStyle.primary,
+          iconBackgroundColor: ColorStyle.primaryContainer,
+          primaryButtonColor: ColorStyle.primary,
         );
     }
   }
@@ -486,17 +487,17 @@ class _DialogButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+      color: ColorStyle.transparent,
       child: InkWell(
         onTap: onPressed,
         borderRadius: BorderRadius.circular(12.r),
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 14.h),
           decoration: BoxDecoration(
-            color: isOutlined ? Colors.transparent : backgroundColor,
+            color: isOutlined ? ColorStyle.transparent : backgroundColor,
             borderRadius: BorderRadius.circular(12.r),
             border: isOutlined
-                ? Border.all(color: const Color(0xFFE5E7EB), width: 1.5)
+                ? Border.all(color: ColorStyle.border, width: 1.5)
                 : null,
           ),
           child: Center(
@@ -505,7 +506,7 @@ class _DialogButton extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w600,
-                color: isOutlined ? textColor : Colors.white,
+                color: isOutlined ? textColor : ColorStyle.white,
               ),
             ),
           ),

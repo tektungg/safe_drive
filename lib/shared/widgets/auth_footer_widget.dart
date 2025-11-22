@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:safe_drive/shared/styles/color_style.dart';
 
 class AuthFooterWidget extends StatelessWidget {
   final String text;
@@ -25,7 +26,7 @@ class AuthFooterWidget extends StatelessWidget {
               text,
               style: TextStyle(
                 fontSize: 14.sp,
-                color: Colors.grey[600],
+                color: ColorStyle.textSecondary,
               ),
             ),
             GestureDetector(
@@ -34,7 +35,7 @@ class AuthFooterWidget extends StatelessWidget {
                 actionText,
                 style: TextStyle(
                   fontSize: 14.sp,
-                  color: Colors.blue,
+                  color: ColorStyle.link,
                   fontWeight: FontWeight.w600,
                 ),
               ),

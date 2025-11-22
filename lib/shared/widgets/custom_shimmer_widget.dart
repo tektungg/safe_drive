@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:safe_drive/shared/styles/color_style.dart';
 
 /// A fully customizable shimmer loading effect widget.
 ///
@@ -186,8 +187,8 @@ class CustomShimmerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveBaseColor = baseColor ?? const Color(0xFFE0E0E0);
-    final effectiveHighlightColor = highlightColor ?? const Color(0xFFF5F5F5);
+    final effectiveBaseColor = baseColor ?? ColorStyle.gray300;
+    final effectiveHighlightColor = highlightColor ?? ColorStyle.gray100;
 
     return Shimmer.fromColors(
       baseColor: effectiveBaseColor,
@@ -206,7 +207,7 @@ class CustomShimmerWidget extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: ColorStyle.white,
         shape: shape == ShimmerShape.circle ? BoxShape.circle : BoxShape.rectangle,
         borderRadius: shape == ShimmerShape.rectangle
             ? BorderRadius.circular(effectiveRadius)

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:safe_drive/shared/styles/color_style.dart';
 import 'package:safe_drive/utils/services/connectivity_service.dart';
 import 'package:safe_drive/utils/services/logger_service.dart';
 
@@ -298,10 +299,10 @@ class _BannerContent extends StatelessWidget {
   Color _getBackgroundColor() {
     switch (state) {
       case BannerState.offline:
-        return offlineBackgroundColor ?? Colors.red.shade500;
+        return offlineBackgroundColor ?? ColorStyle.danger;
       case BannerState.online:
       case BannerState.hidden:
-        return onlineBackgroundColor ?? Colors.green.shade600;
+        return onlineBackgroundColor ?? ColorStyle.success;
     }
   }
 
@@ -327,15 +328,15 @@ class _BannerContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultTextColor = Colors.white;
-    final defaultIconColor = Colors.white;
+    final defaultTextColor = ColorStyle.white;
+    final defaultIconColor = ColorStyle.white;
 
     return AnimatedContainer(
       duration: animationDuration,
       curve: Curves.easeInOut,
       color: _getBackgroundColor(),
       child: Material(
-        color: Colors.transparent,
+        color: ColorStyle.transparent,
         elevation: 4,
         child: SafeArea(
           child: Container(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:safe_drive/shared/styles/color_style.dart';
 
 /// A minimalist and animated toast notification widget.
 ///
@@ -221,13 +222,13 @@ class _ToastOverlayState extends State<_ToastOverlay>
   Color get _backgroundColor {
     switch (widget.type) {
       case ToastType.success:
-        return const Color(0xFF10B981);
+        return ColorStyle.success;
       case ToastType.error:
-        return const Color(0xFFEF4444);
+        return ColorStyle.danger;
       case ToastType.warning:
-        return const Color(0xFFF59E0B);
+        return ColorStyle.warning;
       case ToastType.info:
-        return const Color(0xFF3B82F6);
+        return ColorStyle.info;
     }
   }
 
@@ -256,7 +257,7 @@ class _ToastOverlayState extends State<_ToastOverlay>
         child: FadeTransition(
           opacity: _fadeAnimation,
           child: Material(
-            color: Colors.transparent,
+            color: ColorStyle.transparent,
             child: Container(
               padding: EdgeInsets.symmetric(
                 horizontal: 16.w,
@@ -277,7 +278,7 @@ class _ToastOverlayState extends State<_ToastOverlay>
                 children: [
                   Icon(
                     _icon,
-                    color: Colors.white,
+                    color: ColorStyle.white,
                     size: 22.sp,
                   ),
                   SizedBox(width: 12.w),
@@ -285,7 +286,7 @@ class _ToastOverlayState extends State<_ToastOverlay>
                     child: Text(
                       widget.message,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: ColorStyle.white,
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
                         letterSpacing: 0.2,
@@ -300,7 +301,7 @@ class _ToastOverlayState extends State<_ToastOverlay>
                     },
                     child: Icon(
                       Icons.close_rounded,
-                      color: Colors.white.withValues(alpha: 0.8),
+                      color: ColorStyle.white.withValues(alpha: 0.8),
                       size: 20.sp,
                     ),
                   ),

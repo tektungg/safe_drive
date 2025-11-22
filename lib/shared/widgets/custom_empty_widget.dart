@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:safe_drive/shared/styles/color_style.dart';
 
 /// A fully customizable empty state widget for displaying placeholder content.
 ///
@@ -269,14 +270,14 @@ class CustomEmptyWidget extends StatelessWidget {
         TextStyle(
           fontSize: compact ? 14.sp : 18.sp,
           fontWeight: FontWeight.w600,
-          color: titleColor ?? const Color(0xFF1F2937),
+          color: titleColor ?? ColorStyle.textPrimary,
         );
 
     final effectiveSubtitleStyle = subtitleStyle ??
         TextStyle(
           fontSize: compact ? 12.sp : 14.sp,
           fontWeight: FontWeight.w400,
-          color: subtitleColor ?? const Color(0xFF6B7280),
+          color: subtitleColor ?? ColorStyle.textSecondary,
           height: 1.5,
         );
 
@@ -295,7 +296,7 @@ class CustomEmptyWidget extends StatelessWidget {
               Icon(
                 icon,
                 size: effectiveIconSize.sp,
-                color: iconColor ?? const Color(0xFF9CA3AF),
+                color: iconColor ?? ColorStyle.textTertiary,
               ),
               SizedBox(height: spacing.h),
             ] else if (image != null) ...[
@@ -307,7 +308,7 @@ class CustomEmptyWidget extends StatelessWidget {
                 errorBuilder: (context, error, stackTrace) => Icon(
                   Icons.image_not_supported_outlined,
                   size: effectiveIconSize.sp,
-                  color: const Color(0xFF9CA3AF),
+                  color: ColorStyle.textTertiary,
                 ),
               ),
               SizedBox(height: spacing.h),
@@ -337,8 +338,8 @@ class CustomEmptyWidget extends StatelessWidget {
                 onPressed: onActionPressed,
                 style: actionButtonStyle ??
                     ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF3B82F6),
-                      foregroundColor: Colors.white,
+                      backgroundColor: ColorStyle.primary,
+                      foregroundColor: ColorStyle.white,
                       padding: EdgeInsets.symmetric(
                         horizontal: 24.w,
                         vertical: 12.h,

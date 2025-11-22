@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:get/get.dart";
+import "package:safe_drive/shared/styles/color_style.dart";
 
 /// A fully customizable app bar widget that wraps Flutter's [AppBar].
 ///
@@ -314,12 +315,12 @@ class CustomAppBarWidget extends StatelessWidget
                   style: titleTextStyle ??
                       Get.textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.w600,
-                        color: foregroundColor ?? Colors.black,
+                        color: foregroundColor ?? ColorStyle.textPrimary,
                       ),
                 )
               : null),
-      backgroundColor: backgroundColor ?? Colors.white,
-      foregroundColor: foregroundColor ?? Colors.black,
+      backgroundColor: backgroundColor ?? ColorStyle.white,
+      foregroundColor: foregroundColor ?? ColorStyle.textPrimary,
       elevation: elevation,
       centerTitle: centerTitle,
       leading: leading ??
@@ -327,7 +328,7 @@ class CustomAppBarWidget extends StatelessWidget
               ? IconButton(
                   icon: Icon(
                     Icons.arrow_back_ios,
-                    color: foregroundColor ?? Colors.black,
+                    color: foregroundColor ?? ColorStyle.textPrimary,
                   ),
                   onPressed: onLeadingPressed ?? () => Get.back(),
                 )
@@ -338,11 +339,11 @@ class CustomAppBarWidget extends StatelessWidget
       shape: shape,
       iconTheme: iconTheme ??
           IconThemeData(
-            color: foregroundColor ?? Colors.black,
+            color: foregroundColor ?? ColorStyle.textPrimary,
           ),
       actionsIconTheme: actionsIconTheme ??
           IconThemeData(
-            color: foregroundColor ?? Colors.black,
+            color: foregroundColor ?? ColorStyle.textPrimary,
           ),
       primary: primary,
       excludeHeaderSemantics: excludeHeaderSemantics ?? false,

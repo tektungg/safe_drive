@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:safe_drive/configs/routes/route.dart';
+import 'package:safe_drive/shared/styles/color_style.dart';
 import 'package:safe_drive/shared/widgets/custom_dialog_widget.dart';
 import 'package:safe_drive/shared/widgets/custom_toast_widget.dart';
 import 'package:safe_drive/utils/services/supabase_service.dart';
@@ -47,7 +47,7 @@ class HomeController extends GetxController {
       message: 'Are you sure you want to sign out?',
       primaryButtonText: 'Sign Out',
       secondaryButtonText: 'Cancel',
-      primaryButtonColor: const Color(0xFFEF4444),
+      primaryButtonColor: ColorStyle.danger,
       onPrimaryPressed: () async {
         CustomDialogWidget.close();
         await _supabaseService.signOut();

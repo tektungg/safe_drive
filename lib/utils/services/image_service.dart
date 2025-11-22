@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:safe_drive/shared/styles/color_style.dart';
 import 'package:safe_drive/shared/widgets/custom_toast_widget.dart';
 import 'package:safe_drive/utils/services/logger_service.dart';
 import 'package:safe_drive/utils/services/permission_service.dart';
@@ -257,8 +258,8 @@ class ImageService {
     required String imagePath,
     CropAspectRatio aspectRatio = const CropAspectRatio(ratioX: 1, ratioY: 1),
     String toolbarTitle = 'Crop Photo',
-    Color toolbarColor = const Color(0xFF3B82F6),
-    Color toolbarWidgetColor = Colors.white,
+    Color toolbarColor = ColorStyle.primary,
+    Color toolbarWidgetColor = ColorStyle.white,
     bool lockAspectRatio = true,
   }) async {
     try {

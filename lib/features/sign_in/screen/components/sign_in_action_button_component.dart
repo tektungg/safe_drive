@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:safe_drive/constants/asset_constant.dart';
 import 'package:safe_drive/features/sign_in/controllers/sign_in_controller.dart';
+import 'package:safe_drive/shared/styles/color_style.dart';
 import 'package:safe_drive/shared/widgets/custom_button_widget.dart';
 import 'package:safe_drive/shared/widgets/custom_divider_widget.dart';
 
@@ -35,9 +36,9 @@ class SignInActionButtonComponent extends GetView<SignInController> {
                   ? 'Signing in...'
                   : 'Continue with Google',
               isLoading: controller.isGoogleLoading.value,
-              backgroundColor: Colors.white,
-              textColor: Colors.black87,
-              borderColor: Colors.grey[300],
+              backgroundColor: ColorStyle.white,
+              textColor: ColorStyle.textPrimary,
+              borderColor: ColorStyle.border,
               elevation: 1,
               leadingIcon: controller.isGoogleLoading.value
                   ? null
