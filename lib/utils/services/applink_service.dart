@@ -1,14 +1,14 @@
 import "dart:async";
 import "package:app_links/app_links.dart";
 import "package:get/get.dart";
-import "package:venturo_api_manager/loggers/logger.dart";
+import 'package:safe_drive/utils/services/logger_service.dart';
 
 class ApplinkService extends GetxService {
   final _appLinks = AppLinks();
 
   Future<ApplinkService> initApplink() async {
     final initialLink = await _appLinks.getInitialLink();
-    logger.i("INITIAL LINK: $initialLink");
+    LoggerService.i("INITIAL LINK: $initialLink");
 
     if (initialLink != null) {
       unawaited(_handleDeepLink(initialLink));
@@ -22,7 +22,7 @@ class ApplinkService extends GetxService {
       }
     }, onError: (err) {
       // Handle exception by warning the user their action did not succeed
-      logger.e("Error in deep link stream: $err");
+      LoggerService.e("Error in deep link stream", error: err);
     });
 
     return this;
@@ -30,6 +30,6 @@ class ApplinkService extends GetxService {
 
   Future<void> _handleDeepLink(Uri deepLink) async {
     /** Handle direct deeplink **/
-    logger.i("Handling Deep Link: $deepLink");
+    LoggerService.i("Handling Deep Link: $deepLink");
   }
 }

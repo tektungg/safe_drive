@@ -4,7 +4,6 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   app_links
-  connectivity_plus
   fast_rsa
   file_selector_windows
   firebase_core

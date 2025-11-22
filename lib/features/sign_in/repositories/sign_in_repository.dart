@@ -1,7 +1,8 @@
-import 'package:venturo_api_manager/venturo_api_manager.dart';
+import 'package:dio/dio.dart';
 import 'package:safe_drive/constants/api_constant.dart';
 import 'package:safe_drive/features/sign_in/models/sign_in_model.dart';
 import 'package:safe_drive/utils/services/api_service.dart';
+import 'package:safe_drive/utils/services/logger_service.dart';
 
 class SignInRepository {
   SignInRepository._();
@@ -9,7 +10,7 @@ class SignInRepository {
   static Future<SignInModel> login(
       String phoneNumber, String password, String? fcmToken) async {
     try {
-      final response = await VenturoApiManager.api.post(
+      final response = await ApiService.post(
         ApiConstant.login,
         data: {
           "phone": phoneNumber,
@@ -18,8 +19,11 @@ class SignInRepository {
         },
       );
       return SignInModel.fromJson(response.data);
-    } on DioException catch (e) {
-      throw ApiService.apiErrorHandler(e);
+    } on DioException {
+      rethrow;
+    } catch (e) {
+      LoggerService.e("Error during login", error: e);
+      throw Exception(e.toString());
     }
   }
 }

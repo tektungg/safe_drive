@@ -4,8 +4,8 @@ import 'package:safe_drive/configs/routes/route.dart';
 import 'package:safe_drive/shared/widgets/custom_loading_overlay_widget.dart';
 import 'package:safe_drive/shared/widgets/custom_toast_widget.dart';
 import 'package:safe_drive/utils/helpers/supabase_error_handler.dart';
+import 'package:safe_drive/utils/services/logger_service.dart';
 import 'package:safe_drive/utils/services/supabase_service.dart';
-import 'package:venturo_api_manager/loggers/logger.dart';
 
 class SignInController extends GetxController {
   static SignInController get to => Get.find();
@@ -115,7 +115,7 @@ class SignInController extends GetxController {
       );
 
       if (response.user != null) {
-        logger.i("Sign in with email successful");
+        LoggerService.i("Sign in with email successful");
         CustomLoadingOverlayWidget.hide();
         CustomToast.show(
           message: 'Successfully signed in!',
@@ -126,7 +126,7 @@ class SignInController extends GetxController {
         Get.offAllNamed(Routes.homeRoute);
       }
     } catch (e) {
-      logger.e("Error signing in with email: $e");
+      LoggerService.e("Error signing in with email", error: e);
       CustomLoadingOverlayWidget.hide();
       CustomToast.show(
         message: SupabaseErrorHandler.parseError(e),
@@ -146,7 +146,7 @@ class SignInController extends GetxController {
       final response = await _supabaseService.signInWithGoogle();
 
       if (response != null && response.user != null) {
-        logger.i("Sign in with Google successful");
+        LoggerService.i("Sign in with Google successful");
         CustomLoadingOverlayWidget.hide();
         CustomToast.show(
           message: 'Successfully signed in with Google!',
@@ -156,11 +156,11 @@ class SignInController extends GetxController {
         await Future.delayed(const Duration(milliseconds: 1500));
         Get.offAllNamed(Routes.homeRoute);
       } else {
-        logger.w("Google sign in cancelled");
+        LoggerService.w("Google sign in cancelled");
         CustomLoadingOverlayWidget.hide();
       }
     } catch (e) {
-      logger.e("Error signing in with Google: $e");
+      LoggerService.e("Error signing in with Google", error: e);
       CustomLoadingOverlayWidget.hide();
       CustomToast.show(
         message: SupabaseErrorHandler.parseError(e),

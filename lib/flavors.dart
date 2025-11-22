@@ -1,6 +1,6 @@
 import "package:flutter/services.dart"
     show MethodChannel, PlatformException, appFlavor;
-import "package:vpack/vpack.dart";
+import "package:safe_drive/utils/services/logger_service.dart";
 
 // ignore: prefer-match-file-name
 class F {
@@ -43,7 +43,7 @@ class _FlavorConfig {
 
       return flavor;
     } on PlatformException catch (e, r) {
-      logger.e("Error fetching flavor", error: e, stackTrace: r);
+      LoggerService.e("Error fetching flavor", error: e, stackTrace: r);
       return null;
     }
   }

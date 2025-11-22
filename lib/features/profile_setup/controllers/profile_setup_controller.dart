@@ -9,8 +9,8 @@ import 'package:safe_drive/shared/widgets/custom_bottom_sheet_widget.dart';
 import 'package:safe_drive/shared/widgets/custom_loading_overlay_widget.dart';
 import 'package:safe_drive/shared/widgets/custom_toast_widget.dart';
 import 'package:safe_drive/utils/helpers/supabase_error_handler.dart';
+import 'package:safe_drive/utils/services/logger_service.dart';
 import 'package:safe_drive/utils/services/supabase_service.dart';
-import 'package:venturo_api_manager/loggers/logger.dart';
 
 class ProfileSetupController extends GetxController {
   static ProfileSetupController get to => Get.find();
@@ -74,7 +74,7 @@ class ProfileSetupController extends GetxController {
       }
       return null;
     } catch (e) {
-      logger.e("Error cropping image: $e");
+      LoggerService.e("Error cropping image", error: e);
       CustomToast.show(
         message: 'Failed to crop image',
         type: ToastType.error,
@@ -97,7 +97,7 @@ class ProfileSetupController extends GetxController {
         }
       }
     } catch (e) {
-      logger.e("Error picking image from gallery: $e");
+      LoggerService.e("Error picking image from gallery", error: e);
       CustomToast.show(
         message: 'Failed to pick image from gallery',
         type: ToastType.error,
@@ -120,7 +120,7 @@ class ProfileSetupController extends GetxController {
         }
       }
     } catch (e) {
-      logger.e("Error picking image from camera: $e");
+      LoggerService.e("Error picking image from camera", error: e);
       CustomToast.show(
         message: 'Failed to capture image',
         type: ToastType.error,
@@ -172,7 +172,7 @@ class ProfileSetupController extends GetxController {
 
       return imageUrl;
     } catch (e) {
-      logger.e("Error uploading image: $e");
+      LoggerService.e("Error uploading image", error: e);
       return null;
     }
   }
@@ -199,7 +199,7 @@ class ProfileSetupController extends GetxController {
           avatarUrl: avatarUrl,
           picture: avatarUrl);
 
-      logger.i("Account created successfully");
+      LoggerService.i("Account created successfully");
       CustomLoadingOverlayWidget.hide();
       CustomToast.show(
         message: 'Account created successfully!',
@@ -210,7 +210,7 @@ class ProfileSetupController extends GetxController {
       await Future.delayed(const Duration(milliseconds: 1500));
       Get.offAllNamed(Routes.homeRoute);
     } catch (e) {
-      logger.e("Error saving profile: $e");
+      LoggerService.e("Error saving profile", error: e);
       CustomLoadingOverlayWidget.hide();
       CustomToast.show(
         message: SupabaseErrorHandler.parseError(e),

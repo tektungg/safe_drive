@@ -4,8 +4,8 @@ import 'package:safe_drive/configs/routes/route.dart';
 import 'package:safe_drive/shared/widgets/custom_loading_overlay_widget.dart';
 import 'package:safe_drive/shared/widgets/custom_toast_widget.dart';
 import 'package:safe_drive/utils/helpers/supabase_error_handler.dart';
+import 'package:safe_drive/utils/services/logger_service.dart';
 import 'package:safe_drive/utils/services/supabase_service.dart';
-import 'package:venturo_api_manager/loggers/logger.dart';
 
 class SignUpController extends GetxController {
   static SignUpController get to => Get.find();
@@ -136,7 +136,7 @@ class SignUpController extends GetxController {
         Get.offAllNamed(Routes.profileSetupRoute);
       }
     } catch (e) {
-      logger.e("Error signing up with email: $e");
+      LoggerService.e("Error signing up with email", error: e);
       CustomLoadingOverlayWidget.hide();
       CustomToast.show(
         message: SupabaseErrorHandler.parseError(e),

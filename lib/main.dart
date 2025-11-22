@@ -10,7 +10,6 @@ import 'package:safe_drive/utils/services/api_service.dart';
 import 'package:safe_drive/utils/services/applink_service.dart';
 import 'package:safe_drive/utils/services/hive_service.dart';
 import 'package:safe_drive/utils/services/supabase_service.dart';
-import 'package:vpack/vpack.dart';
 import 'utils/services/sentry_services.dart';
 
 void main() async {
@@ -25,7 +24,6 @@ void main() async {
 
 Future<void> _initServices() async {
   log("Env Key ${Env.key}");
-  await VPack.initialize();
   await F.init();
 
   await Get.putAsync(() => HiveService().initHive());

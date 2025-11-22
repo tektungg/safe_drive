@@ -2,7 +2,7 @@ import "package:get/get.dart";
 import "package:google_sign_in/google_sign_in.dart";
 import "package:supabase_flutter/supabase_flutter.dart";
 import "package:safe_drive/env/env.dart";
-import "package:venturo_api_manager/loggers/logger.dart";
+import 'package:safe_drive/utils/services/logger_service.dart';
 
 class SupabaseService extends GetxService {
   static SupabaseService get instance => Get.find();
@@ -17,11 +17,11 @@ class SupabaseService extends GetxService {
       );
 
       client = Supabase.instance.client;
-      logger.i("Supabase initialized successfully");
+      LoggerService.i("Supabase initialized successfully");
 
       return this;
     } catch (e) {
-      logger.e("Error initializing Supabase: $e");
+      LoggerService.e("Error initializing Supabase", error: e);
       rethrow;
     }
   }
@@ -48,10 +48,10 @@ class SupabaseService extends GetxService {
         password: password,
       );
 
-      logger.i("Sign up with email successful: ${response.user?.email}");
+      LoggerService.i("Sign up with email successful: ${response.user?.email}");
       return response;
     } catch (e) {
-      logger.e("Error during email sign up: $e");
+      LoggerService.e("Error during email sign up", error: e);
       rethrow;
     }
   }
@@ -72,10 +72,10 @@ class SupabaseService extends GetxService {
         UserAttributes(data: data),
       );
 
-      logger.i("User profile updated successfully");
+      LoggerService.i("User profile updated successfully");
       return response;
     } catch (e) {
-      logger.e("Error updating user profile: $e");
+      LoggerService.e("Error updating user profile", error: e);
       rethrow;
     }
   }
@@ -91,10 +91,10 @@ class SupabaseService extends GetxService {
         password: password,
       );
 
-      logger.i("Sign in with email successful: ${response.user?.email}");
+      LoggerService.i("Sign in with email successful: ${response.user?.email}");
       return response;
     } catch (e) {
-      logger.e("Error during email sign in: $e");
+      LoggerService.e("Error during email sign in", error: e);
       rethrow;
     }
   }
@@ -118,7 +118,7 @@ class SupabaseService extends GetxService {
       final googleUser = await googleSignIn.signIn();
 
       if (googleUser == null) {
-        logger.w("Google Sign In cancelled by user");
+        LoggerService.w("Google Sign In cancelled by user");
         return null;
       }
 
@@ -127,11 +127,11 @@ class SupabaseService extends GetxService {
       final idToken = googleAuth.idToken;
 
       if (accessToken == null) {
-        logger.e("No Access Token found");
+        LoggerService.e("No Access Token found");
         throw 'No Access Token found.';
       }
       if (idToken == null) {
-        logger.e("No ID Token found");
+        LoggerService.e("No ID Token found");
         throw 'No ID Token found.';
       }
 
@@ -141,10 +141,10 @@ class SupabaseService extends GetxService {
         accessToken: accessToken,
       );
 
-      logger.i("Google Sign In successful: ${response.user?.email}");
+      LoggerService.i("Google Sign In successful: ${response.user?.email}");
       return response;
     } catch (e) {
-      logger.e("Error during Google Sign In: $e");
+      LoggerService.e("Error during Google Sign In", error: e);
       rethrow;
     }
   }

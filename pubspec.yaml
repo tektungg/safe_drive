@@ -45,12 +45,14 @@ dependencies:
   sentry_flutter: ^8.13.2
   amplitude_flutter: ^4.3.2
 
+  # Network
+  dio: ^5.4.0
+
   # Auth
   supabase_flutter: ^2.8.0
   google_sign_in: ^6.2.2
 
-  venturo_api_manager: ^1.0.1
-  vpack: ^1.0.0
+  # Media
   image_picker: ^1.2.1
   image_cropper: ^11.0.0
 

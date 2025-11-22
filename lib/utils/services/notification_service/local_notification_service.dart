@@ -3,8 +3,7 @@ import "dart:convert";
 import "package:firebase_messaging/firebase_messaging.dart";
 import "package:flutter_local_notifications/flutter_local_notifications.dart";
 import "package:get/get.dart";
-import "package:venturo_api_manager/loggers/logger.dart";
-import "package:vpack/vpack.dart";
+import 'package:safe_drive/utils/services/logger_service.dart';
 
 class LocalNotificationService extends GetxService {
   static final localNotif = FlutterLocalNotificationsPlugin();
@@ -83,7 +82,7 @@ class LocalNotificationService extends GetxService {
 
       isInitiated = true;
     } catch (e) {
-      logger.e("ERROR INIT LOCAL NOTIF: $e");
+      LoggerService.e("ERROR INIT LOCAL NOTIF", error: e);
       isInitiated = false;
     }
   }
@@ -106,6 +105,6 @@ class LocalNotificationService extends GetxService {
   void handleNotif(NotificationResponse response) async {
     /** Handle Notif Message **/
     final payload = jsonDecode(response.payload ?? "");
-    logger.i("PAYLOAD $payload");
+    LoggerService.i("PAYLOAD $payload");
   }
 }

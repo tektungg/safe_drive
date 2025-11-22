@@ -8,7 +8,7 @@ class SplashController extends GetxController {
   void toDashboard() {
     Future.delayed(const Duration(seconds: 2), () {
       if (HiveService.getBearer() != null) {
-        Get.offAllNamed(Routes.crudRoute);
+        Get.offAllNamed(Routes.homeRoute);
       } else {
         Get.offNamed(Routes.signInRoute);
       }

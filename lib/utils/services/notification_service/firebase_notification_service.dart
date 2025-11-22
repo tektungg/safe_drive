@@ -4,7 +4,7 @@ import "dart:io";
 
 import "package:firebase_messaging/firebase_messaging.dart";
 import "package:get/get.dart";
-import "package:venturo_api_manager/loggers/logger.dart";
+import 'package:safe_drive/utils/services/logger_service.dart';
 import "package:safe_drive/utils/services/notification_service/local_notification_service.dart";
 
 class FirebaseNotificationService extends GetxService {
@@ -19,10 +19,10 @@ class FirebaseNotificationService extends GetxService {
       );
 
       final token = await instance.getToken();
-      logger.i("Device Token $token");
+      LoggerService.i("Device Token $token");
       unawaited(_notificationHandler());
     } catch (e) {
-      logger.e("ERROR SETUP FIREBASE: $e");
+      LoggerService.e("ERROR SETUP FIREBASE", error: e);
     }
   }
 
@@ -38,7 +38,7 @@ class FirebaseNotificationService extends GetxService {
 
     /** Handle notification click on foreground **/
     FirebaseMessaging.onMessage.listen((message) {
-      logger.d(jsonEncode(message.notification?.toMap()));
+      LoggerService.d(jsonEncode(message.notification?.toMap()));
       if (Platform.isAndroid) LocalNotificationService.showNotif(message);
     });
 
@@ -51,7 +51,7 @@ class FirebaseNotificationService extends GetxService {
   void _handlerNotif(RemoteMessage message) async {
     /** Handle Notif Message **/
     final payload = message.data;
-    logger.i("PAYLOAD $payload");
+    LoggerService.i("PAYLOAD $payload");
   }
 
   Future<FirebaseNotificationService> init() async {
