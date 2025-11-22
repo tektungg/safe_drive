@@ -8,6 +8,9 @@ import 'package:safe_drive/utils/services/connectivity_service.dart';
 import 'package:safe_drive/utils/services/hive_service.dart';
 import 'package:safe_drive/utils/services/logger_service.dart';
 import 'package:safe_drive/utils/services/supabase_service.dart';
+import 'package:safe_drive/constants/hive_constant.dart';
+import 'package:safe_drive/utils/services/auth_service.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignInController extends GetxController {
   static SignInController get to => Get.find();
@@ -47,12 +50,6 @@ class SignInController extends GetxController {
   final RxInt failedAttempts = 0.obs;
   final Rx<DateTime?> lockoutUntil = Rx<DateTime?>(null);
 
-  // Hive keys
-  static const String _rememberMeKey = 'remember_me_enabled';
-  static const String _lastLoginKey = 'last_login_timestamp';
-  static const String _failedAttemptsKey = 'failed_attempts';
-  static const String _lockoutUntilKey = 'lockout_until';
-
   @override
   void onInit() {
     super.onInit();
@@ -64,9 +61,11 @@ class SignInController extends GetxController {
   void _loadRateLimitData() {
     try {
       final savedFailedAttempts = _hiveService.get<int>(
-        key: _failedAttemptsKey,
+        key: HiveConstant.failedAttemptsKey,
       );
-      final savedLockoutUntil = _hiveService.get<String>(key: _lockoutUntilKey);
+      final savedLockoutUntil = _hiveService.get<String>(
+        key: HiveConstant.lockoutUntilKey,
+      );
 
       if (savedFailedAttempts != null) {
         failedAttempts.value = savedFailedAttempts;
@@ -93,20 +92,8 @@ class SignInController extends GetxController {
   /// Save remember me preference and login timestamp
   void _saveRememberMeSession() {
     try {
-      if (rememberMe.value) {
-        // Save remember me preference
-        _hiveService.set<bool>(key: _rememberMeKey, data: true);
-
-        // Save current login timestamp
-        _hiveService.set<String>(
-          key: _lastLoginKey,
-          data: DateTime.now().toIso8601String(),
-        );
-
-        LoggerService.d('Remember me session saved', tag: 'SignIn');
-      } else {
-        _clearRememberMe();
-      }
+      // Use AuthService to save remember me session
+      AuthService.saveRememberMeSession(rememberMe.value);
     } catch (e) {
       LoggerService.e(
         'Error saving remember me session',
@@ -116,28 +103,16 @@ class SignInController extends GetxController {
     }
   }
 
-  /// Clear remember me data
-  void _clearRememberMe() {
-    try {
-      HiveService.generalBox.delete(_rememberMeKey);
-      HiveService.generalBox.delete(_lastLoginKey);
-      rememberMe.value = false;
-      LoggerService.d('Remember me data cleared', tag: 'SignIn');
-    } catch (e) {
-      LoggerService.e('Error clearing remember me', error: e, tag: 'SignIn');
-    }
-  }
-
   /// Save rate limit data to Hive storage
   void _saveRateLimitData() {
     try {
       _hiveService.set<int>(
-        key: _failedAttemptsKey,
+        key: HiveConstant.failedAttemptsKey,
         data: failedAttempts.value,
       );
       if (lockoutUntil.value != null) {
         _hiveService.set<String>(
-          key: _lockoutUntilKey,
+          key: HiveConstant.lockoutUntilKey,
           data: lockoutUntil.value!.toIso8601String(),
         );
       }
@@ -151,8 +126,8 @@ class SignInController extends GetxController {
     try {
       failedAttempts.value = 0;
       lockoutUntil.value = null;
-      HiveService.generalBox.delete(_failedAttemptsKey);
-      HiveService.generalBox.delete(_lockoutUntilKey);
+      // Use AuthService for consistent Hive operations
+      AuthService.clearRateLimitData();
       LoggerService.d('Reset rate limit data', tag: 'SignIn');
     } catch (e) {
       LoggerService.e(
@@ -166,18 +141,25 @@ class SignInController extends GetxController {
   /// Check if account is currently locked out
   bool _isLockedOut() {
     if (lockoutUntil.value != null) {
-      if (DateTime.now().isBefore(lockoutUntil.value!)) {
-        final remaining = lockoutUntil.value!.difference(DateTime.now());
+      // Refresh lockout status at the start to handle edge case
+      final now = DateTime.now();
+
+      if (now.isBefore(lockoutUntil.value!)) {
+        final remaining = lockoutUntil.value!.difference(now);
         final minutes = remaining.inMinutes;
         final seconds = remaining.inSeconds % 60;
-        CustomToast.show(
-          message:
-              'Too many failed attempts. Please try again in ${minutes}m ${seconds}s',
-          type: ToastType.error,
-        );
+
+        // Only show message if remaining time is positive
+        if (minutes > 0 || seconds > 0) {
+          CustomToast.show(
+            message:
+                'Too many failed attempts. Please try again in ${minutes}m ${seconds}s',
+            type: ToastType.error,
+          );
+        }
         return true;
       } else {
-        // Lockout expired
+        // Lockout expired - reset data
         _resetRateLimitData();
         return false;
       }
@@ -185,30 +167,77 @@ class SignInController extends GetxController {
     return false;
   }
 
-  /// Handle failed sign in attempt
-  void _handleFailedAttempt() {
-    failedAttempts.value++;
-    LoggerService.w('Failed attempt #${failedAttempts.value}', tag: 'SignIn');
+  /// Handle failed sign in attempt with error differentiation
+  /// Only increment failed attempts for authentication errors,
+  /// not for network or server errors.
+  void _handleFailedAttempt(dynamic error, {bool showOriginalError = true}) {
+    // Check if this is an authentication error (invalid credentials)
+    // vs network/server error
+    final errorMessage = SupabaseErrorHandler.parseError(error);
+    final isAuthError = _isAuthenticationError(error, errorMessage);
 
-    if (failedAttempts.value >= 5) {
-      lockoutUntil.value = DateTime.now().add(const Duration(minutes: 5));
-      _saveRateLimitData();
-      LoggerService.w(
-        'Account locked until ${lockoutUntil.value}',
-        tag: 'SignIn',
-      );
-      CustomToast.show(
-        message: 'Too many failed attempts. Account locked for 5 minutes.',
-        type: ToastType.error,
-      );
+    if (isAuthError) {
+      // Only increment for authentication errors
+      failedAttempts.value++;
+      LoggerService.w('Failed attempt #${failedAttempts.value}', tag: 'SignIn');
+
+      if (failedAttempts.value >= 5) {
+        // Lockout triggered
+        lockoutUntil.value = DateTime.now().add(const Duration(minutes: 5));
+        _saveRateLimitData();
+        LoggerService.w(
+          'Account locked until ${lockoutUntil.value}',
+          tag: 'SignIn',
+        );
+        CustomToast.show(
+          message: 'Too many failed attempts. Account locked for 5 minutes.',
+          type: ToastType.error,
+        );
+      } else {
+        // Show remaining attempts
+        _saveRateLimitData();
+        final remaining = 5 - failedAttempts.value;
+
+        // Show original error message with remaining attempts
+        CustomToast.show(
+          message: '$errorMessage ($remaining attempts remaining)',
+          type: ToastType.error,
+        );
+      }
     } else {
-      _saveRateLimitData();
-      final remaining = 5 - failedAttempts.value;
-      CustomToast.show(
-        message: 'Invalid credentials. $remaining attempts remaining.',
-        type: ToastType.error,
-      );
+      // Network or server error - show original error without incrementing
+      if (showOriginalError) {
+        CustomToast.show(message: errorMessage, type: ToastType.error);
+      }
     }
+  }
+
+  /// Check if the error is an authentication error (invalid credentials)
+  ///
+  /// Returns true for authentication errors, false for network/server errors
+  bool _isAuthenticationError(dynamic error, String errorMessage) {
+    // Check if error is from Supabase auth
+    if (error is AuthException) {
+      // Authentication-related errors
+      return error.statusCode == '400' || // Invalid credentials
+          error.message.toLowerCase().contains('invalid') ||
+          error.message.toLowerCase().contains('credentials') ||
+          error.message.toLowerCase().contains('password') ||
+          error.message.toLowerCase().contains('email');
+    }
+
+    // Check error message for authentication keywords
+    final lowerMessage = errorMessage.toLowerCase();
+    if (lowerMessage.contains('invalid') ||
+        lowerMessage.contains('credentials') ||
+        lowerMessage.contains('incorrect') ||
+        lowerMessage.contains('wrong password') ||
+        lowerMessage.contains('email not found')) {
+      return true;
+    }
+
+    // Not an authentication error (likely network/server error)
+    return false;
   }
 
   /// Toggle remember me
@@ -323,8 +352,8 @@ class SignInController extends GetxController {
       LoggerService.e("Error signing in with email", error: e, tag: 'SignIn');
       CustomLoadingOverlayWidget.hide();
 
-      // MEDIUM FIX #7: Handle failed attempt for rate limiting
-      _handleFailedAttempt();
+      // Handle failed attempt with error differentiation
+      _handleFailedAttempt(e);
     } finally {
       isLoading.value = false;
     }
