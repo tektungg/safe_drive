@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safe_drive/shared/styles/color_style.dart';
+import 'package:safe_drive/shared/styles/text_style.dart';
 
 /// A fully customizable empty state widget for displaying placeholder content.
 ///
@@ -267,18 +268,20 @@ class CustomEmptyWidget extends StatelessWidget {
     final effectiveIconSize = iconSize ?? (compact ? 48.0 : 80.0);
 
     final effectiveTitleStyle = titleStyle ??
-        TextStyle(
-          fontSize: compact ? 14.sp : 18.sp,
-          fontWeight: FontWeight.w600,
-          color: titleColor ?? ColorStyle.textPrimary,
-        );
+        (compact
+            ? TextStyles.emptyStateTitle.copyWith(
+                fontSize: 14.sp,
+                color: titleColor ?? ColorStyle.textPrimary,
+              )
+            : TextStyles.emptyStateTitle.copyWith(
+                fontSize: 18.sp,
+                color: titleColor ?? ColorStyle.textPrimary,
+              ));
 
     final effectiveSubtitleStyle = subtitleStyle ??
-        TextStyle(
+        TextStyles.emptyStateSubtitle.copyWith(
           fontSize: compact ? 12.sp : 14.sp,
-          fontWeight: FontWeight.w400,
           color: subtitleColor ?? ColorStyle.textSecondary,
-          height: 1.5,
         );
 
     return Center(
@@ -351,10 +354,7 @@ class CustomEmptyWidget extends StatelessWidget {
                     ),
                 child: Text(
                   actionText!,
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: TextStyles.buttonMedium,
                 ),
               ),
             ],

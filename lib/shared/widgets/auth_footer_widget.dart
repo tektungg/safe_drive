@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safe_drive/shared/styles/color_style.dart';
+import 'package:safe_drive/shared/styles/text_style.dart';
 
 class AuthFooterWidget extends StatelessWidget {
   final String text;
@@ -24,8 +25,7 @@ class AuthFooterWidget extends StatelessWidget {
           children: [
             Text(
               text,
-              style: TextStyle(
-                fontSize: 14.sp,
+              style: TextStyles.bodyMedium.copyWith(
                 color: ColorStyle.textSecondary,
               ),
             ),
@@ -33,11 +33,7 @@ class AuthFooterWidget extends StatelessWidget {
               onTap: onActionTap,
               child: Text(
                 actionText,
-                style: TextStyle(
-                  fontSize: 14.sp,
-                  color: ColorStyle.link,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: TextStyles.linkPlain,
               ),
             ),
           ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:safe_drive/shared/styles/color_style.dart';
+import 'package:safe_drive/shared/styles/text_style.dart';
 import 'package:safe_drive/shared/widgets/custom_divider_widget.dart';
 
 /// A fully customizable bottom sheet widget with modern styling.
@@ -321,11 +322,8 @@ class _BottomSheetContent extends StatelessWidget {
               if (title != null) ...[
                 Text(
                   title!,
-                  style: TextStyle(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w700,
+                  style: TextStyles.bottomSheetTitle.copyWith(
                     color: effectiveTitleColor,
-                    letterSpacing: -0.5,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -333,11 +331,8 @@ class _BottomSheetContent extends StatelessWidget {
                   SizedBox(height: 8.h),
                   Text(
                     subtitle!,
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
+                    style: TextStyles.bottomSheetSubtitle.copyWith(
                       color: effectiveSubtitleColor,
-                      height: 1.4,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -455,22 +450,16 @@ class _ActionTileState extends State<_ActionTile> {
                     children: [
                       Text(
                         action.label,
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
+                        style: TextStyles.titleMedium.copyWith(
                           color: effectiveLabelColor,
-                          letterSpacing: -0.2,
                         ),
                       ),
                       if (action.subtitle != null) ...[
                         SizedBox(height: 4.h),
                         Text(
                           action.subtitle!,
-                          style: TextStyle(
+                          style: TextStyles.bodySmall.copyWith(
                             fontSize: 13.sp,
-                            fontWeight: FontWeight.w400,
-                            color: ColorStyle.textTertiary,
-                            height: 1.3,
                           ),
                         ),
                       ],

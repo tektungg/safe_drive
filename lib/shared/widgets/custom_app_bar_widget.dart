@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:get/get.dart";
 import "package:safe_drive/shared/styles/color_style.dart";
+import "package:safe_drive/shared/styles/text_style.dart";
 
 /// A fully customizable app bar widget that wraps Flutter's [AppBar].
 ///
@@ -313,8 +314,7 @@ class CustomAppBarWidget extends StatelessWidget
               ? Text(
                   title!,
                   style: titleTextStyle ??
-                      Get.textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.w600,
+                      TextStyles.appBarTitle.copyWith(
                         color: foregroundColor ?? ColorStyle.textPrimary,
                       ),
                 )

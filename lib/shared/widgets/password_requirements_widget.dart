@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safe_drive/shared/styles/color_style.dart';
+import 'package:safe_drive/shared/styles/text_style.dart';
 
 class PasswordRequirementsWidget extends StatelessWidget {
   final bool isVisible;
@@ -59,11 +60,7 @@ class PasswordRequirementsWidget extends StatelessWidget {
                       children: [
                         Text(
                           'Password should contain',
-                          style: TextStyle(
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w600,
-                            color: ColorStyle.textSecondary,
-                          ),
+                          style: TextStyles.labelMedium,
                         ),
                         SizedBox(height: 8.h),
                         _RequirementRow(
@@ -120,8 +117,7 @@ class _RequirementRow extends StatelessWidget {
           SizedBox(width: 8.w),
           Text(
             text,
-            style: TextStyle(
-              fontSize: 12.sp,
+            style: TextStyles.bodySmall.copyWith(
               color: isMet ? ColorStyle.success : ColorStyle.danger,
             ),
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:safe_drive/shared/styles/color_style.dart';
+import 'package:safe_drive/shared/styles/text_style.dart';
 
 /// A fully customizable dialog widget with consistent styling and animations.
 ///
@@ -333,12 +334,7 @@ class _CustomDialogWidgetState extends State<CustomDialogWidget> {
                 if (widget.title != null) ...[
                   Text(
                     widget.title!,
-                    style: widget.titleStyle ??
-                        TextStyle(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w700,
-                          color: ColorStyle.textPrimary,
-                        ),
+                    style: widget.titleStyle ?? TextStyles.dialogTitle,
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 12.h),
@@ -350,13 +346,7 @@ class _CustomDialogWidgetState extends State<CustomDialogWidget> {
                 else if (widget.message != null)
                   Text(
                     widget.message!,
-                    style: widget.messageStyle ??
-                        TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                          color: ColorStyle.textSecondary,
-                          height: 1.5,
-                        ),
+                    style: widget.messageStyle ?? TextStyles.dialogMessage,
                     textAlign: TextAlign.center,
                   ),
 
@@ -503,9 +493,7 @@ class _DialogButton extends StatelessWidget {
           child: Center(
             child: Text(
               text,
-              style: TextStyle(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w600,
+              style: TextStyles.buttonMedium.copyWith(
                 color: isOutlined ? textColor : ColorStyle.white,
               ),
             ),

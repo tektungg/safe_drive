@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safe_drive/shared/styles/color_style.dart';
+import 'package:safe_drive/shared/styles/text_style.dart';
 
 /// A fully customizable button widget that supports various styles and states.
 ///
@@ -289,9 +290,10 @@ class CustomButtonWidget extends StatelessWidget {
                   Flexible(
                     child: Text(
                       text,
-                      style: TextStyle(
+                      style: TextStyles.buttonLarge.copyWith(
                         fontSize: fontSize ?? 16.sp,
-                        fontWeight: fontWeight ?? FontWeight.w600,
+                        fontWeight: fontWeight,
+                        color: effectiveTextColor,
                       ),
                       overflow: TextOverflow.ellipsis,
                     ),

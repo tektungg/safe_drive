@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:safe_drive/shared/styles/color_style.dart';
+import 'package:safe_drive/shared/styles/text_style.dart';
 
 /// A minimalist and animated toast notification widget.
 ///
@@ -285,12 +286,7 @@ class _ToastOverlayState extends State<_ToastOverlay>
                   Expanded(
                     child: Text(
                       widget.message,
-                      style: TextStyle(
-                        color: ColorStyle.white,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: 0.2,
-                      ),
+                      style: TextStyles.toast,
                     ),
                   ),
                   GestureDetector(

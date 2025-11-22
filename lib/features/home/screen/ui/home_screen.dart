@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:safe_drive/features/home/controllers/home_controller.dart';
 import 'package:safe_drive/shared/styles/color_style.dart';
+import 'package:safe_drive/shared/styles/text_style.dart';
 import 'package:safe_drive/shared/widgets/custom_app_bar_widget.dart';
 
 class HomeScreen extends GetView<HomeController> {
@@ -33,20 +34,12 @@ class HomeScreen extends GetView<HomeController> {
                   children: [
                     Text(
                       'Hello, ${controller.userName.value}! 👋',
-                      style: TextStyle(
-                        fontSize: 28.sp,
-                        fontWeight: FontWeight.w700,
-                        color: ColorStyle.textPrimary,
-                      ),
+                      style: TextStyles.greeting,
                     ),
                     SizedBox(height: 4.h),
                     Text(
                       controller.getGreeting(),
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w400,
-                        color: ColorStyle.textSecondary,
-                      ),
+                      style: TextStyles.authSubtitle,
                     ),
                   ],
                 )),
@@ -105,11 +98,7 @@ class HomeScreen extends GetView<HomeController> {
             // Recent Activity Section
             Text(
               'Recent Activity',
-              style: TextStyle(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w700,
-                color: ColorStyle.textPrimary,
-              ),
+              style: TextStyles.headlineMedium,
             ),
             SizedBox(height: 16.h),
 
@@ -135,20 +124,12 @@ class HomeScreen extends GetView<HomeController> {
                     SizedBox(height: 12.h),
                     Text(
                       'No recent activity',
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
-                        color: ColorStyle.textSecondary,
-                      ),
+                      style: TextStyles.emptyStateTitle,
                     ),
                     SizedBox(height: 4.h),
                     Text(
                       'Start your first trip to see activity here',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                        color: ColorStyle.textTertiary,
-                      ),
+                      style: TextStyles.emptyStateSubtitle,
                     ),
                   ],
                 ),
@@ -160,11 +141,7 @@ class HomeScreen extends GetView<HomeController> {
             // Quick Actions
             Text(
               'Quick Actions',
-              style: TextStyle(
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w700,
-                color: ColorStyle.textPrimary,
-              ),
+              style: TextStyles.headlineMedium,
             ),
             SizedBox(height: 16.h),
 
@@ -235,20 +212,12 @@ class _StatCard extends StatelessWidget {
           SizedBox(height: 12.h),
           Text(
             label,
-            style: TextStyle(
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w500,
-              color: ColorStyle.textSecondary,
-            ),
+            style: TextStyles.statLabel,
           ),
           SizedBox(height: 4.h),
           Text(
             value,
-            style: TextStyle(
-              fontSize: 20.sp,
-              fontWeight: FontWeight.w700,
-              color: ColorStyle.textPrimary,
-            ),
+            style: TextStyles.statValue,
           ),
         ],
       ),
@@ -316,20 +285,12 @@ class _QuickActionCard extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w600,
-                        color: ColorStyle.textPrimary,
-                      ),
+                      style: TextStyles.titleMedium,
                     ),
                     SizedBox(height: 2.h),
                     Text(
                       subtitle,
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w400,
-                        color: ColorStyle.textSecondary,
-                      ),
+                      style: TextStyles.bodyMedium,
                     ),
                   ],
                 ),

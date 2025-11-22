@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safe_drive/shared/styles/color_style.dart';
+import 'package:safe_drive/shared/styles/text_style.dart';
 
 class AuthHeaderWidget extends StatelessWidget {
   final String title;
@@ -19,19 +19,13 @@ class AuthHeaderWidget extends StatelessWidget {
         SizedBox(height: 40.h),
         Text(
           title,
-          style: TextStyle(
-            fontSize: 32.sp,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyles.authTitle,
           textAlign: TextAlign.center,
         ),
         SizedBox(height: 12.h),
         Text(
           subtitle,
-          style: TextStyle(
-            fontSize: 16.sp,
-            color: ColorStyle.textSecondary,
-          ),
+          style: TextStyles.authSubtitle,
           textAlign: TextAlign.center,
         ),
         SizedBox(height: 60.h),

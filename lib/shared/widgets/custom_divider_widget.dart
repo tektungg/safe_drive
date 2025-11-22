@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safe_drive/shared/styles/color_style.dart';
+import 'package:safe_drive/shared/styles/text_style.dart';
 
 /// A fully customizable divider widget with optional text label.
 ///
@@ -176,7 +177,7 @@ class CustomDividerWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: effectiveHorizontalPadding),
           child: Text(
             text!,
-            style: TextStyle(
+            style: TextStyles.labelLarge.copyWith(
               color: effectiveTextColor,
               fontSize: effectiveFontSize,
               fontWeight: effectiveFontWeight,

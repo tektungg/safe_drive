@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safe_drive/shared/styles/color_style.dart';
+import 'package:safe_drive/shared/styles/text_style.dart';
 
 /// A modern and elegant text form field widget with comprehensive customization.
 ///
@@ -337,11 +338,8 @@ class _CustomTextFormFieldWidgetState extends State<CustomTextFormFieldWidget> {
         if (widget.label != null) ...[
           Text(
             widget.label!,
-            style: TextStyle(
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w600,
+            style: TextStyles.inputLabel.copyWith(
               color: effectiveLabelColor,
-              letterSpacing: 0.2,
             ),
           ),
           SizedBox(height: 8.h),
@@ -366,11 +364,9 @@ class _CustomTextFormFieldWidgetState extends State<CustomTextFormFieldWidget> {
           onTap: widget.onTap,
           focusNode: widget.focusNode,
           cursorColor: widget.cursorColor ?? effectiveFocusedBorderColor,
-          style: TextStyle(
+          style: TextStyles.inputText.copyWith(
             fontSize: effectiveFontSize,
-            fontWeight: FontWeight.w500,
             color: widget.textColor ?? ColorStyle.textPrimary,
-            letterSpacing: 0.3,
           ),
           decoration: InputDecoration(
             isDense: true,
@@ -420,19 +416,15 @@ class _CustomTextFormFieldWidgetState extends State<CustomTextFormFieldWidget> {
                     padding: EdgeInsets.only(right: 4.w),
                     child: Text(
                       widget.prefixText!,
-                      style: TextStyle(
+                      style: TextStyles.inputLabel.copyWith(
                         fontSize: effectiveFontSize,
-                        fontWeight: FontWeight.w600,
-                        color: ColorStyle.textSecondary,
                       ),
                     ),
                   )
                 : null,
-            hintStyle: TextStyle(
+            hintStyle: TextStyles.inputHint.copyWith(
               fontSize: effectiveFontSize,
-              fontWeight: FontWeight.w400,
               color: effectiveHintColor,
-              letterSpacing: 0.2,
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(effectiveBorderRadius),
@@ -469,11 +461,8 @@ class _CustomTextFormFieldWidgetState extends State<CustomTextFormFieldWidget> {
                 width: 1.5,
               ),
             ),
-            errorStyle: TextStyle(
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w500,
+            errorStyle: TextStyles.inputError.copyWith(
               color: effectiveErrorBorderColor,
-              letterSpacing: 0.2,
             ),
             errorMaxLines: 2,
           ),

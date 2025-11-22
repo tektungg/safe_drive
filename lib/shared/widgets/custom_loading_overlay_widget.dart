@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:safe_drive/shared/styles/color_style.dart';
+import 'package:safe_drive/shared/styles/text_style.dart';
 
 /// A fully customizable full-screen loading overlay widget with animations.
 ///
@@ -261,12 +262,7 @@ class _CustomLoadingOverlayWidgetState
                 if (widget.message != null)
                   Text(
                     widget.message!,
-                    style: widget.messageStyle ??
-                        TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                          color: ColorStyle.textPrimary,
-                        ),
+                    style: widget.messageStyle ?? TextStyles.bodyMedium,
                     textAlign: TextAlign.center,
                   ),
               ],

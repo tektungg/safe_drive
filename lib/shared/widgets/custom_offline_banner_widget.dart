@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:safe_drive/shared/styles/color_style.dart';
+import 'package:safe_drive/shared/styles/text_style.dart';
 import 'package:safe_drive/utils/services/connectivity_service.dart';
 import 'package:safe_drive/utils/services/logger_service.dart';
 
@@ -367,9 +368,8 @@ class _BannerContent extends StatelessWidget {
                         child: Text(
                           _getMessage(),
                           key: ValueKey(state),
-                          style: TextStyle(
+                          style: TextStyles.bodyMedium.copyWith(
                             color: textColor ?? defaultTextColor,
-                            fontSize: 14.sp,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -381,10 +381,9 @@ class _BannerContent extends StatelessWidget {
                               ConnectivityService.to.getConnectionTypeName();
                           return Text(
                             'Connection: $typeName',
-                            style: TextStyle(
+                            style: TextStyles.captionMedium.copyWith(
                               color: (textColor ?? defaultTextColor)
                                   .withValues(alpha: 0.8),
-                              fontSize: 11.sp,
                             ),
                           );
                         }),
@@ -422,10 +421,7 @@ class _BannerContent extends StatelessWidget {
                             ),
                             child: Text(
                               'Retry',
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
+                              style: TextStyles.buttonSmall,
                             ),
                           ),
                   ),
