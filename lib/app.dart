@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:safe_drive/configs/pages/page.dart';
 import 'package:safe_drive/configs/routes/route.dart';
 import 'package:safe_drive/configs/themes/theme.dart';
+import 'package:safe_drive/shared/widgets/custom_offline_banner_widget.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -32,6 +33,13 @@ class MyApp extends StatelessWidget {
             theme: themeLight,
             defaultTransition: Transition.native,
             getPages: Pages.pages,
+            builder: (context, child) {
+              return CustomOfflineBannerWidget(
+                showRetryButton: true,
+                showConnectionType: true,
+                child: child ?? const SizedBox.shrink(),
+              );
+            },
           ),
         );
       },

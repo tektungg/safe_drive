@@ -1,10 +1,13 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:safe_drive/configs/routes/route.dart';
 import 'package:safe_drive/constants/api_constant.dart';
 import 'package:safe_drive/shared/repositories/global_repository.dart';
+import 'package:safe_drive/utils/services/connectivity_service.dart';
 import 'package:safe_drive/utils/services/hive_service.dart';
+import 'package:safe_drive/utils/services/logger_service.dart';
 
 /// A customizable API service built on Dio for making HTTP requests.
 ///
@@ -76,9 +79,53 @@ class ApiService extends GetxService {
   static QueuedInterceptor _createInterceptor() {
     return QueuedInterceptorsWrapper(
       onRequest: (options, handler) async {
-        // Check internet connection
-        final isConnected = await checkInternet();
+        // Check internet connection using ConnectivityService if available
+        bool isConnected = false;
+        try {
+          if (Get.isRegistered<ConnectivityService>()) {
+            isConnected = ConnectivityService.to.isConnected.value;
+
+            // If not connected, wait for connection with timeout
+            if (!isConnected) {
+              LoggerService.w(
+                'No internet connection - waiting...',
+                tag: 'ApiService',
+              );
+
+              try {
+                await ConnectivityService.to.waitForConnection(
+                  timeout: const Duration(seconds: 5),
+                );
+                isConnected = true;
+              } on TimeoutException {
+                // Still no connection after timeout
+                isConnected = false;
+              }
+            }
+          } else {
+            // Fallback to manual check if ConnectivityService not available
+            isConnected = await checkInternet();
+          }
+        } catch (e) {
+          LoggerService.e(
+            'Error checking connectivity',
+            error: e,
+            tag: 'ApiService',
+          );
+          // Fallback to manual check
+          isConnected = await checkInternet();
+        }
+
         if (!isConnected) {
+          LoggerService.e(
+            'API request blocked: No internet connection',
+            tag: 'ApiService',
+            data: {
+              'path': options.path,
+              'method': options.method,
+            },
+          );
+
           if (Get.currentRoute == Routes.noConnection) {
             return handler.reject(
               DioException(
@@ -100,12 +147,34 @@ class ApiService extends GetxService {
           );
         }
 
+        LoggerService.d(
+          'API Request: ${options.method} ${options.path}',
+          tag: 'ApiService',
+          data: options.queryParameters.isNotEmpty
+              ? {'params': options.queryParameters}
+              : null,
+        );
+
         return handler.next(options);
       },
       onResponse: (response, handler) async {
+        LoggerService.d(
+          'API Response: ${response.statusCode} ${response.requestOptions.method} ${response.requestOptions.path}',
+          tag: 'ApiService',
+        );
         return handler.next(response);
       },
       onError: (error, handler) async {
+        LoggerService.e(
+          'API Error: ${error.type.name} ${error.requestOptions.method} ${error.requestOptions.path}',
+          tag: 'ApiService',
+          error: error.error,
+          data: {
+            'statusCode': error.response?.statusCode,
+            'message': error.message,
+          },
+        );
+
         // Handle token refresh (403)
         if (error.response?.statusCode == 403 &&
             Get.currentRoute != Routes.signInRoute) {

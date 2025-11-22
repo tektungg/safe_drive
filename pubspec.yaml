@@ -46,6 +46,7 @@ dependencies:
 
   # Network
   dio: ^5.9.0
+  connectivity_plus: ^6.0.5
 
   # Auth
   supabase_flutter: ^2.8.0

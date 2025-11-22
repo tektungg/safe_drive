@@ -7,6 +7,7 @@ import Foundation
 
 import amplitude_flutter
 import app_links
+import connectivity_plus
 import fast_rsa
 import file_selector_macos
 import firebase_analytics
@@ -22,6 +23,7 @@ import url_launcher_macos
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   AmplitudeFlutterPlugin.register(with: registry.registrar(forPlugin: "AmplitudeFlutterPlugin"))
   AppLinksMacosPlugin.register(with: registry.registrar(forPlugin: "AppLinksMacosPlugin"))
+  ConnectivityPlusPlugin.register(with: registry.registrar(forPlugin: "ConnectivityPlusPlugin"))
   FastRsaPlugin.register(with: registry.registrar(forPlugin: "FastRsaPlugin"))
   FileSelectorPlugin.register(with: registry.registrar(forPlugin: "FileSelectorPlugin"))
   FirebaseAnalyticsPlugin.register(with: registry.registrar(forPlugin: "FirebaseAnalyticsPlugin"))
