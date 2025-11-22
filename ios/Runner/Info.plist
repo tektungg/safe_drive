@@ -48,6 +48,27 @@
     <true/>
     <key>UIApplicationSupportsIndirectInputEvents</key>
     <true/>
+
+    <!-- Camera Permission -->
+    <key>NSCameraUsageDescription</key>
+    <string>We need access to your camera to take photos for your profile</string>
+
+    <!-- Photo Library Permission -->
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>We need access to your photo library to select photos for your profile</string>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>We need access to save photos to your library</string>
+
+    <!-- Location Permission -->
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need your location to track your driving sessions</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>We need your location to track your driving sessions even when the app is in the background</string>
+
+    <!-- Notifications Permission -->
+    <key>NSUserNotificationsUsageDescription</key>
+    <string>We need to send you notifications about your driving sessions</string>
+
     <key>GIDClientID</key>
     <string>391478746861-2dv6s327qvamnphnvpngat2lg98o8c3b.apps.googleusercontent.com</string>
     <key>GIDServerClientID</key>
