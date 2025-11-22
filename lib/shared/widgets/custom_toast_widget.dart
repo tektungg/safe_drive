@@ -112,10 +112,14 @@ class CustomToast {
     _currentOverlay?.remove();
     _currentOverlay = null;
 
-    final overlay = Get.overlayContext;
-    if (overlay == null) return;
+    // Get the navigator's overlay state
+    final context = Get.key.currentContext;
+    if (context == null) return;
 
-    final overlayState = Overlay.of(overlay);
+    final navigator = Navigator.of(context);
+    final overlayState = navigator.overlay;
+
+    if (overlayState == null) return;
 
     _currentOverlay = OverlayEntry(
       builder: (context) => _ToastOverlay(

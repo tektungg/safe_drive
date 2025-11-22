@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
         return GestureDetector(
           onTap: () => Get.focusScope?.unfocus(),
           child: GetMaterialApp(
+            navigatorKey: Get.key,
             title: 'Safe Drive',
             debugShowCheckedModeBanner: false,
             initialRoute: Routes.splashRoute,

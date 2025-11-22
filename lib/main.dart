@@ -10,7 +10,6 @@ import 'package:safe_drive/utils/services/api_service.dart';
 import 'package:safe_drive/utils/services/applink_service.dart';
 import 'package:safe_drive/utils/services/hive_service.dart';
 import 'package:safe_drive/utils/services/supabase_service.dart';
-import 'utils/services/sentry_services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,10 +33,6 @@ Future<void> _initServices() async {
   */
   await Get.putAsync(() => ApplinkService().initApplink());
   await Get.putAsync(() => ApiService().init());
-  // await Get.putAsync(() => AmplitudeServices().init());
 
-  await SentryFlutter.init(
-    SentryService.instance.initializeConfiguration,
-    appRunner: () => runApp(const MyApp()),
-  );
+  runApp(const MyApp());
 }

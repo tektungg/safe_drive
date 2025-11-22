@@ -110,23 +110,26 @@ class SupabaseService extends GetxService {
       const iosClientId =
           '391478746861-2dv6s327qvamnphnvpngat2lg98o8c3b.apps.googleusercontent.com';
 
-      final GoogleSignIn googleSignIn = GoogleSignIn(
+      // Initialize GoogleSignIn instance with configuration
+      final GoogleSignIn googleSignIn = GoogleSignIn.instance;
+      await googleSignIn.initialize(
         clientId: iosClientId,
         serverClientId: webClientId,
       );
 
-      final googleUser = await googleSignIn.signIn();
+      // Authenticate user - this triggers the sign in flow
+      final googleUser = await googleSignIn.authenticate();
 
-      if (googleUser == null) {
-        LoggerService.w("Google Sign In cancelled by user");
-        return null;
-      }
-
-      final googleAuth = await googleUser.authentication;
-      final accessToken = googleAuth.accessToken;
+      // Get ID Token from authentication
+      final googleAuth = googleUser.authentication;
       final idToken = googleAuth.idToken;
 
-      if (accessToken == null) {
+      // Get Access Token from authorization (need at least one scope, using email)
+      final authorization =
+          await googleUser.authorizationClient.authorizeScopes(['email']);
+      final accessToken = authorization.accessToken;
+
+      if (accessToken.isEmpty) {
         LoggerService.e("No Access Token found");
         throw 'No Access Token found.';
       }

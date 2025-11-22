@@ -4,7 +4,6 @@ import 'package:get/get.dart' hide Response;
 import 'package:safe_drive/configs/routes/route.dart';
 import 'package:safe_drive/constants/api_constant.dart';
 import 'package:safe_drive/shared/repositories/global_repository.dart';
-import 'package:safe_drive/utils/services/amplitude_services.dart';
 import 'package:safe_drive/utils/services/hive_service.dart';
 
 /// A customizable API service built on Dio for making HTTP requests.
@@ -116,7 +115,6 @@ class ApiService extends GetxService {
         // Handle unauthorized (401)
         if (error.response?.statusCode == 401) {
           await HiveService.clearHiveLogout();
-          await AmplitudeServices.instance.reset();
           return Get.offAllNamed(Routes.signInRoute);
         }
 
@@ -176,7 +174,6 @@ class ApiService extends GetxService {
     } catch (e) {
       if (e is DioException && e.response?.statusCode == 422) {
         await HiveService.clearHiveLogout();
-        await AmplitudeServices.instance.reset();
         await Get.offAllNamed(Routes.signInRoute);
         return handler.next(err);
       }
