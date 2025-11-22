@@ -403,7 +403,7 @@ class PermissionService {
     return request(
       Permission.photos,
       title: title ?? 'Storage Permission',
-      message: message ?? 'We need storage access to save photos',
+      message: message ?? 'We need storage access to access your medias',
       onGranted: onGranted,
       onDenied: onDenied,
     );

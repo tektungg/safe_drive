@@ -162,7 +162,7 @@ class LoggerService {
       return;
     }
 
-    final timestamp = DateTime.now().toIso8601String();
+    final timestamp = _formatTimestamp(DateTime.now());
     final levelStr = level.toString().split('.').last.toUpperCase();
     final tagStr = tag != null ? '[$tag] ' : '';
     final emoji = _getEmoji(level);
@@ -212,6 +212,18 @@ class LoggerService {
     }
 
     debugPrint('$color$message$reset');
+  }
+
+  /// Format timestamp to be more readable
+  ///
+  /// Format: HH:mm:ss.SSS (e.g., 15:07:38.222)
+  static String _formatTimestamp(DateTime dateTime) {
+    final hour = dateTime.hour.toString().padLeft(2, '0');
+    final minute = dateTime.minute.toString().padLeft(2, '0');
+    final second = dateTime.second.toString().padLeft(2, '0');
+    final millisecond = dateTime.millisecond.toString().padLeft(3, '0');
+
+    return '$hour:$minute:$second.$millisecond';
   }
 
   /// Get emoji for log level
