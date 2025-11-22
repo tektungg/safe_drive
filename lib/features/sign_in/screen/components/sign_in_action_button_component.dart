@@ -17,11 +17,13 @@ class SignInActionButtonComponent extends GetView<SignInController> {
         SizedBox(height: 24.h),
 
         // Sign In Button
-        Obx(() => CustomButtonWidget(
-              text: 'Sign In',
-              isLoading: controller.isLoading.value,
-              onPressed: () => controller.signInWithEmail(),
-            )),
+        Obx(
+          () => CustomButtonWidget(
+            text: 'Sign In',
+            isLoading: controller.isLoading.value,
+            onPressed: () => controller.signInWithEmail(),
+          ),
+        ),
 
         SizedBox(height: 24.h),
 
@@ -31,24 +33,26 @@ class SignInActionButtonComponent extends GetView<SignInController> {
         SizedBox(height: 24.h),
 
         // Google Sign In Button
-        Obx(() => CustomButtonWidget(
-              text: controller.isGoogleLoading.value
-                  ? 'Signing in...'
-                  : 'Continue with Google',
-              isLoading: controller.isGoogleLoading.value,
-              backgroundColor: ColorStyle.white,
-              textColor: ColorStyle.textPrimary,
-              borderColor: ColorStyle.border,
-              elevation: 1,
-              leadingIcon: controller.isGoogleLoading.value
-                  ? null
-                  : Image.asset(
-                      AssetConstants.iconGoogle,
-                      width: 24.w,
-                      height: 24.h,
-                    ),
-              onPressed: () => controller.signInWithGoogle(),
-            )),
+        Obx(
+          () => CustomButtonWidget(
+            text: controller.isGoogleLoading.value
+                ? 'Signing in...'
+                : 'Continue with Google',
+            isLoading: controller.isGoogleLoading.value,
+            backgroundColor: ColorStyle.white,
+            textColor: ColorStyle.textPrimary,
+            borderColor: ColorStyle.border,
+            elevation: 1,
+            leadingIcon: controller.isGoogleLoading.value
+                ? null
+                : Image.asset(
+                    AssetConstants.iconGoogle,
+                    width: 24.w,
+                    height: 24.h,
+                  ),
+            onPressed: () => controller.signInWithGoogle(),
+          ),
+        ),
       ],
     );
   }
