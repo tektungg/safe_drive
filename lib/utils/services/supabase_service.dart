@@ -3,6 +3,7 @@ import "package:google_sign_in/google_sign_in.dart";
 import "package:supabase_flutter/supabase_flutter.dart";
 import "package:safe_drive/env/env.dart";
 import 'package:safe_drive/utils/services/logger_service.dart';
+import 'package:safe_drive/shared/models/user_data_model.dart';
 
 class SupabaseService extends GetxService {
   static SupabaseService get instance => Get.find();
@@ -68,9 +69,7 @@ class SupabaseService extends GetxService {
       if (avatarUrl != null) data['avatar_url'] = avatarUrl;
       if (picture != null) data['picture'] = picture;
 
-      final response = await client.auth.updateUser(
-        UserAttributes(data: data),
-      );
+      final response = await client.auth.updateUser(UserAttributes(data: data));
 
       LoggerService.i("User profile updated successfully");
       return response;
@@ -125,8 +124,8 @@ class SupabaseService extends GetxService {
       final idToken = googleAuth.idToken;
 
       // Get Access Token from authorization (need at least one scope, using email)
-      final authorization =
-          await googleUser.authorizationClient.authorizeScopes(['email']);
+      final authorization = await googleUser.authorizationClient
+          .authorizeScopes(['email']);
       final accessToken = authorization.accessToken;
 
       if (accessToken.isEmpty) {
@@ -149,6 +148,64 @@ class SupabaseService extends GetxService {
     } catch (e) {
       LoggerService.e("Error during Google Sign In", error: e);
       rethrow;
+    }
+  }
+
+  // Get user data as UserDataModel
+  UserDataModel? getUserData() {
+    try {
+      final user = currentUser;
+      if (user == null) {
+        LoggerService.w(
+          "No user is currently signed in",
+          tag: 'SupabaseService',
+        );
+        return null;
+      }
+
+      final userData = UserDataModel.fromSupabaseUser(user);
+      LoggerService.i(
+        "User data retrieved: ${userData.displayName} (${userData.email})",
+        tag: 'SupabaseService',
+      );
+      return userData;
+    } catch (e, stackTrace) {
+      LoggerService.e(
+        "Error getting user data",
+        error: e,
+        stackTrace: stackTrace,
+        tag: 'SupabaseService',
+      );
+      return null;
+    }
+  }
+
+  // Refresh and get latest user data
+  Future<UserDataModel?> refreshUserData() async {
+    try {
+      // Refresh session to get latest user data
+      final response = await client.auth.refreshSession();
+      final user = response.user;
+
+      if (user == null) {
+        LoggerService.w("No user found after refresh", tag: 'SupabaseService');
+        return null;
+      }
+
+      final userData = UserDataModel.fromSupabaseUser(user);
+      LoggerService.i(
+        "User data refreshed: ${userData.displayName} (${userData.email})",
+        tag: 'SupabaseService',
+      );
+      return userData;
+    } catch (e, stackTrace) {
+      LoggerService.e(
+        "Error refreshing user data",
+        error: e,
+        stackTrace: stackTrace,
+        tag: 'SupabaseService',
+      );
+      return null;
     }
   }
 }
