@@ -80,9 +80,9 @@ class ScannerStatisticsComponent extends GetView<ScannerController> {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.05),
+        color: color.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: color.withOpacity(0.2), width: 1),
+        border: Border.all(color: color.withValues(alpha: 0.2), width: 1),
       ),
       child: isFullWidth
           ? Row(
@@ -93,11 +93,19 @@ class ScannerStatisticsComponent extends GetView<ScannerController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(label, style: TextStyles.labelMedium.copyWith(color: ColorStyle.textSecondary)),
+                      Text(
+                        label,
+                        style: TextStyles.labelMedium.copyWith(
+                          color: ColorStyle.textSecondary,
+                        ),
+                      ),
                       SizedBox(height: 4.h),
                       Text(
                         value,
-                        style: TextStyles.titleLarge.copyWith(color: color, fontWeight: FontWeight.bold),
+                        style: TextStyles.titleLarge.copyWith(
+                          color: color,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),
@@ -109,11 +117,19 @@ class ScannerStatisticsComponent extends GetView<ScannerController> {
               children: [
                 Icon(icon, size: 24.sp, color: color),
                 SizedBox(height: 12.h),
-                Text(label, style: TextStyles.labelMedium.copyWith(color: ColorStyle.textSecondary)),
+                Text(
+                  label,
+                  style: TextStyles.labelMedium.copyWith(
+                    color: ColorStyle.textSecondary,
+                  ),
+                ),
                 SizedBox(height: 4.h),
                 Text(
                   value,
-                  style: TextStyles.titleLarge.copyWith(color: color, fontWeight: FontWeight.bold),
+                  style: TextStyles.titleLarge.copyWith(
+                    color: color,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),

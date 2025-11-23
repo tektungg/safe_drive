@@ -30,22 +30,30 @@ class ScannerControlButtonsComponent extends GetView<ScannerController> {
                       }
                     },
               style: ElevatedButton.styleFrom(
-                backgroundColor: controller.isScanning.value ? ColorStyle.danger : ColorStyle.primary,
+                backgroundColor: controller.isScanning.value
+                    ? ColorStyle.danger
+                    : ColorStyle.primary,
                 foregroundColor: ColorStyle.white,
                 padding: EdgeInsets.symmetric(vertical: 16.h),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                ),
                 elevation: 0,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    controller.isScanning.value ? Icons.stop_circle_outlined : Icons.play_circle_outline,
+                    controller.isScanning.value
+                        ? Icons.stop_circle_outlined
+                        : Icons.play_circle_outline,
                     size: 24.sp,
                   ),
                   SizedBox(width: 8.w),
                   Text(
-                    controller.isScanning.value ? 'Stop Detection' : 'Start Detection',
+                    controller.isScanning.value
+                        ? 'Stop Detection'
+                        : 'Start Detection',
                     style: TextStyles.buttonMedium,
                   ),
                 ],
@@ -65,7 +73,11 @@ class ScannerControlButtonsComponent extends GetView<ScannerController> {
               onPressed: () {
                 // TODO: Open settings
               },
-              icon: Icon(Icons.settings_outlined, size: 24.sp, color: ColorStyle.textPrimary),
+              icon: Icon(
+                Icons.settings_outlined,
+                size: 24.sp,
+                color: ColorStyle.textPrimary,
+              ),
               tooltip: 'Settings',
             ),
           ),
@@ -82,7 +94,11 @@ class ScannerControlButtonsComponent extends GetView<ScannerController> {
               onPressed: () {
                 _showInfoDialog(context);
               },
-              icon: Icon(Icons.info_outline, size: 24.sp, color: ColorStyle.textPrimary),
+              icon: Icon(
+                Icons.info_outline,
+                size: 24.sp,
+                color: ColorStyle.textPrimary,
+              ),
               tooltip: 'Information',
             ),
           ),
@@ -125,13 +141,15 @@ class ScannerControlButtonsComponent extends GetView<ScannerController> {
               _buildInfoItem(
                 icon: Icons.mood_bad_outlined,
                 title: 'Yawn Detection',
-                description: 'Detects yawning, a common sign of fatigue and drowsiness.',
+                description:
+                    'Detects yawning, a common sign of fatigue and drowsiness.',
               ),
               SizedBox(height: 16.h),
               _buildInfoItem(
                 icon: Icons.warning_amber_outlined,
                 title: 'Alert Levels',
-                description: 'Safe (0-25%), Moderate (25-50%), Risky (50-75%), Dangerous (75-100%)',
+                description:
+                    'Safe (0-25%), Moderate (25-50%), Risky (50-75%), Dangerous (75-100%)',
               ),
             ],
           ),
@@ -139,23 +157,34 @@ class ScannerControlButtonsComponent extends GetView<ScannerController> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Got It', style: TextStyles.buttonMedium.copyWith(color: ColorStyle.primary)),
+            child: Text(
+              'Got It',
+              style: TextStyles.buttonMedium.copyWith(
+                color: ColorStyle.primary,
+              ),
+            ),
           ),
         ],
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.r),
+        ),
       ),
     );
   }
 
   /// Build info item
-  Widget _buildInfoItem({required IconData icon, required String title, required String description}) {
+  Widget _buildInfoItem({
+    required IconData icon,
+    required String title,
+    required String description,
+  }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           padding: EdgeInsets.all(8.w),
           decoration: BoxDecoration(
-            color: ColorStyle.primary.withOpacity(0.1),
+            color: ColorStyle.primary.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(8.r),
           ),
           child: Icon(icon, size: 20.sp, color: ColorStyle.primary),
@@ -165,9 +194,19 @@ class ScannerControlButtonsComponent extends GetView<ScannerController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: TextStyles.labelLarge.copyWith(fontWeight: FontWeight.w600)),
+              Text(
+                title,
+                style: TextStyles.labelLarge.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
               SizedBox(height: 4.h),
-              Text(description, style: TextStyles.bodySmall.copyWith(color: ColorStyle.textSecondary)),
+              Text(
+                description,
+                style: TextStyles.bodySmall.copyWith(
+                  color: ColorStyle.textSecondary,
+                ),
+              ),
             ],
           ),
         ),

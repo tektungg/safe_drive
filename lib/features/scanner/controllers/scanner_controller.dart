@@ -51,7 +51,10 @@ class ScannerController extends GetxController {
       );
 
       if (!hasPermission) {
-        LoggerService.error('Camera permission denied', tag: 'ScannerController');
+        LoggerService.error(
+          'Camera permission denied',
+          tag: 'ScannerController',
+        );
         return;
       }
 
@@ -59,7 +62,10 @@ class ScannerController extends GetxController {
       cameras.value = await availableCameras();
       if (cameras.isEmpty) {
         LoggerService.error('No cameras available', tag: 'ScannerController');
-        CustomToast.show(message: 'No cameras found on this device', type: ToastType.error);
+        CustomToast.show(
+          message: 'No cameras found on this device',
+          type: ToastType.error,
+        );
         return;
       }
 
@@ -80,7 +86,10 @@ class ScannerController extends GetxController {
       await controller.initialize();
       cameraController.value = controller;
 
-      LoggerService.info('Camera initialized successfully', tag: 'ScannerController');
+      LoggerService.info(
+        'Camera initialized successfully',
+        tag: 'ScannerController',
+      );
     } catch (e, stackTrace) {
       LoggerService.error(
         'Failed to initialize camera',
@@ -88,7 +97,10 @@ class ScannerController extends GetxController {
         error: e,
         stackTrace: stackTrace,
       );
-      CustomToast.show(message: 'Failed to initialize camera', type: ToastType.error);
+      CustomToast.show(
+        message: 'Failed to initialize camera',
+        type: ToastType.error,
+      );
     } finally {
       isCameraInitializing.value = false;
     }
@@ -101,7 +113,7 @@ class ScannerController extends GetxController {
     try {
       isScanning.value = true;
       detectionStatus.value = 'Scanning...';
-      detectionStatusMessage.value = 'Keep looking at the camera';
+      detectionStatusMessage.value = 'Keep your face in view of the camera';
 
       // Reset statistics
       eyeClosedCount.value = 0;
@@ -115,7 +127,10 @@ class ScannerController extends GetxController {
       // For now, we'll simulate detection
 
       LoggerService.info('Started scanning', tag: 'ScannerController');
-      CustomToast.show(message: 'Drowsiness detection started', type: ToastType.success);
+      CustomToast.show(
+        message: 'Drowsiness detection started',
+        type: ToastType.success,
+      );
     } catch (e, stackTrace) {
       LoggerService.error(
         'Failed to start scanning',
@@ -123,7 +138,10 @@ class ScannerController extends GetxController {
         error: e,
         stackTrace: stackTrace,
       );
-      CustomToast.show(message: 'Failed to start detection', type: ToastType.error);
+      CustomToast.show(
+        message: 'Failed to start detection',
+        type: ToastType.error,
+      );
       isScanning.value = false;
     }
   }
@@ -137,7 +155,10 @@ class ScannerController extends GetxController {
     detectionStatusMessage.value = 'Detection paused';
 
     LoggerService.info('Stopped scanning', tag: 'ScannerController');
-    CustomToast.show(message: 'Drowsiness detection stopped', type: ToastType.info);
+    CustomToast.show(
+      message: 'Drowsiness detection stopped',
+      type: ToastType.info,
+    );
   }
 
   /// Update alert level based on drowsiness score

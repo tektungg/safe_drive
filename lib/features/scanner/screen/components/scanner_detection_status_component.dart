@@ -30,18 +30,25 @@ class ScannerDetectionStatusComponent extends GetView<ScannerController> {
                 Icon(
                   Icons.radar,
                   size: 24.sp,
-                  color: controller.isScanning.value ? ColorStyle.primary : ColorStyle.textSecondary,
+                  color: controller.isScanning.value
+                      ? ColorStyle.primary
+                      : ColorStyle.textSecondary,
                 ),
                 SizedBox(width: 12.w),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(controller.detectionStatus.value, style: TextStyles.titleMedium),
+                      Text(
+                        controller.detectionStatus.value,
+                        style: TextStyles.titleMedium,
+                      ),
                       SizedBox(height: 4.h),
                       Text(
                         controller.detectionStatusMessage.value,
-                        style: TextStyles.bodySmall.copyWith(color: ColorStyle.textSecondary),
+                        style: TextStyles.bodySmall.copyWith(
+                          color: ColorStyle.textSecondary,
+                        ),
                       ),
                     ],
                   ),
@@ -57,7 +64,9 @@ class ScannerDetectionStatusComponent extends GetView<ScannerController> {
               children: [
                 Text(
                   'Drowsiness Score',
-                  style: TextStyles.labelLarge.copyWith(color: ColorStyle.textSecondary),
+                  style: TextStyles.labelLarge.copyWith(
+                    color: ColorStyle.textSecondary,
+                  ),
                 ),
                 Text(
                   '${controller.drowsinessScore.value}%',
@@ -77,7 +86,9 @@ class ScannerDetectionStatusComponent extends GetView<ScannerController> {
               child: LinearProgressIndicator(
                 value: controller.drowsinessScore.value / 100,
                 backgroundColor: ColorStyle.backgroundGray,
-                valueColor: AlwaysStoppedAnimation<Color>(controller.getAlertLevelColor()),
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  controller.getAlertLevelColor(),
+                ),
                 minHeight: 8.h,
               ),
             ),
@@ -88,14 +99,21 @@ class ScannerDetectionStatusComponent extends GetView<ScannerController> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
               decoration: BoxDecoration(
-                color: controller.getAlertLevelColor().withOpacity(0.1),
+                color: controller.getAlertLevelColor().withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8.r),
-                border: Border.all(color: controller.getAlertLevelColor().withOpacity(0.3), width: 1),
+                border: Border.all(
+                  color: controller.getAlertLevelColor().withValues(alpha: 0.3),
+                  width: 1,
+                ),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(_getAlertIcon(), size: 16.sp, color: controller.getAlertLevelColor()),
+                  Icon(
+                    _getAlertIcon(),
+                    size: 16.sp,
+                    color: controller.getAlertLevelColor(),
+                  ),
                   SizedBox(width: 6.w),
                   Text(
                     controller.getAlertLevelText(),

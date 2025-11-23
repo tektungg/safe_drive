@@ -38,12 +38,16 @@ class ScannerCameraPreviewComponent extends GetView<ScannerController> {
         color: ColorStyle.black,
         borderRadius: BorderRadius.circular(24.r),
         boxShadow: [
-          BoxShadow(color: ColorStyle.black.withOpacity(0.1), blurRadius: 20, offset: const Offset(0, 4)),
+          BoxShadow(
+            color: ColorStyle.black.withValues(alpha: 0.1),
+            blurRadius: 20,
+            offset: const Offset(0, 4),
+          ),
         ],
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(24.r),
-        child: AspectRatio(aspectRatio: 4 / 3, child: CameraPreview(controller.cameraController.value!)),
+        child: CameraPreview(controller.cameraController.value!),
       ),
     );
   }
@@ -52,26 +56,32 @@ class ScannerCameraPreviewComponent extends GetView<ScannerController> {
   Widget _buildLoadingState() {
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(color: ColorStyle.surface, borderRadius: BorderRadius.circular(24.r)),
-      child: AspectRatio(
-        aspectRatio: 4 / 3,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            CustomShimmerWidget(width: double.infinity, height: double.infinity, borderRadius: 24.r),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const CircularProgressIndicator(color: ColorStyle.primary),
-                SizedBox(height: 16.h),
-                Text(
-                  'Initializing camera...',
-                  style: TextStyles.bodyMedium.copyWith(color: ColorStyle.textSecondary),
+      decoration: BoxDecoration(
+        color: ColorStyle.surface,
+        borderRadius: BorderRadius.circular(24.r),
+      ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          CustomShimmerWidget(
+            width: double.infinity,
+            height: double.infinity,
+            borderRadius: 24.r,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const CircularProgressIndicator(color: ColorStyle.primary),
+              SizedBox(height: 16.h),
+              Text(
+                'Initializing camera...',
+                style: TextStyles.bodyMedium.copyWith(
+                  color: ColorStyle.textSecondary,
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -83,22 +93,34 @@ class ScannerCameraPreviewComponent extends GetView<ScannerController> {
       decoration: BoxDecoration(
         color: ColorStyle.dangerContainer,
         borderRadius: BorderRadius.circular(24.r),
-        border: Border.all(color: ColorStyle.danger.withOpacity(0.3), width: 2),
+        border: Border.all(
+          color: ColorStyle.danger.withValues(alpha: 0.3),
+          width: 2,
+        ),
       ),
       child: AspectRatio(
         aspectRatio: 4 / 3,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.camera_alt_outlined, size: 64.sp, color: ColorStyle.danger),
+            Icon(
+              Icons.camera_alt_outlined,
+              size: 64.sp,
+              color: ColorStyle.danger,
+            ),
             SizedBox(height: 16.h),
-            Text('Camera not available', style: TextStyles.titleMedium.copyWith(color: ColorStyle.danger)),
+            Text(
+              'Camera not available',
+              style: TextStyles.titleMedium.copyWith(color: ColorStyle.danger),
+            ),
             SizedBox(height: 8.h),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 32.w),
               child: Text(
                 'Please check camera permissions',
-                style: TextStyles.bodySmall.copyWith(color: ColorStyle.textSecondary),
+                style: TextStyles.bodySmall.copyWith(
+                  color: ColorStyle.textSecondary,
+                ),
                 textAlign: TextAlign.center,
               ),
             ),
