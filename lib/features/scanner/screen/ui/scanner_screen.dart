@@ -31,6 +31,7 @@ class ScannerScreen extends GetView<ScannerController> {
           ),
         ],
       ),
+      bottomNavigationBar: const ScannerControlButtonsComponent(),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
@@ -61,11 +62,6 @@ class ScannerScreen extends GetView<ScannerController> {
 
               // Statistics
               const ScannerStatisticsComponent(),
-
-              SizedBox(height: 24.h),
-
-              // Control buttons
-              const ScannerControlButtonsComponent(),
 
               SizedBox(height: 16.h),
 

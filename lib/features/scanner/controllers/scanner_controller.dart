@@ -127,10 +127,6 @@ class ScannerController extends GetxController {
       // For now, we'll simulate detection
 
       LoggerService.info('Started scanning', tag: 'ScannerController');
-      CustomToast.show(
-        message: 'Drowsiness detection started',
-        type: ToastType.success,
-      );
     } catch (e, stackTrace) {
       LoggerService.error(
         'Failed to start scanning',
@@ -155,10 +151,6 @@ class ScannerController extends GetxController {
     detectionStatusMessage.value = 'Detection paused';
 
     LoggerService.info('Stopped scanning', tag: 'ScannerController');
-    CustomToast.show(
-      message: 'Drowsiness detection stopped',
-      type: ToastType.info,
-    );
   }
 
   /// Update alert level based on drowsiness score
