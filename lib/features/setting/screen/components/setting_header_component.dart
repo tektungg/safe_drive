@@ -26,6 +26,7 @@ class SettingHeaderComponent extends GetView<SettingController> {
       child: Column(
         children: [
           // Profile Avatar
+          SizedBox(height: 16.h),
           Obx(
             () => Container(
               width: 80.w,

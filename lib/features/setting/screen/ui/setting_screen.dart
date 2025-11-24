@@ -13,6 +13,7 @@ class SettingScreen extends GetView<SettingController> {
     return Scaffold(
       backgroundColor: ColorStyle.backgroundGray,
       body: SafeArea(
+        top: false,
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
