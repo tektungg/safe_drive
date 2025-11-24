@@ -127,7 +127,7 @@ class ProfileSetupController extends GetxController {
 
       // Wait for toast to show before navigating
       await Future.delayed(const Duration(milliseconds: 1500));
-      Get.offAllNamed(Routes.homeRoute);
+      Get.offAllNamed(Routes.mainRoute);
     } catch (e) {
       LoggerService.e("Error saving profile", error: e);
       CustomLoadingOverlayWidget.hide();

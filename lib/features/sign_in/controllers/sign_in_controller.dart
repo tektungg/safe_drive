@@ -346,7 +346,7 @@ class SignInController extends GetxController {
 
         // Optimize delay from 1500ms to 300ms
         await Future.delayed(const Duration(milliseconds: 300));
-        Get.offAllNamed(Routes.homeRoute);
+        Get.offAllNamed(Routes.mainRoute);
       }
     } catch (e) {
       LoggerService.e("Error signing in with email", error: e, tag: 'SignIn');
@@ -391,7 +391,7 @@ class SignInController extends GetxController {
 
         // Optimize delay from 1500ms to 300ms
         await Future.delayed(const Duration(milliseconds: 300));
-        Get.offAllNamed(Routes.homeRoute);
+        Get.offAllNamed(Routes.mainRoute);
       } else {
         LoggerService.w("Google sign in cancelled", tag: 'SignIn');
         CustomLoadingOverlayWidget.hide();

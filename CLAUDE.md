@@ -37,6 +37,8 @@ lib/
 │       ├── custom_loading_overlay_widget.dart
 │       ├── custom_shimmer_widget.dart
 │       ├── custom_offline_banner_widget.dart
+│       ├── custom_bottom_navigation_bar_widget.dart
+│       ├── custom_fab_bottom_app_bar_widget.dart
 │       ├── auth_header_widget.dart
 │       ├── auth_footer_widget.dart
 │       └── password_requirements_widget.dart
@@ -839,6 +841,232 @@ PasswordRequirementsWidget(
   hasUppercase: controller.hasUppercase.value,
   hasNumber: controller.hasNumber.value,
   hasSymbol: controller.hasSymbol.value,
+)
+```
+
+#### 15. CustomBottomNavigationBarWidget
+
+**Purpose:** Modern bottom navigation bar
+
+**File:** `lib/shared/widgets/custom_bottom_navigation_bar_widget.dart`
+
+**Key Features:**
+- Modern, elegant design with smooth transitions
+- Support for 1-5 navigation items
+- Active/inactive states with customizable colors
+- Icon and label support
+- Badge support for notifications
+- Smooth animation on item selection
+- Fixed and shifting types
+- Fully customizable appearance
+
+**Usage Examples:**
+
+```dart
+// Basic usage with 3 items
+CustomBottomNavigationBarWidget(
+  currentIndex: 0,
+  onTap: (index) => controller.changePage(index),
+  items: [
+    BottomNavItem(
+      icon: Icons.home_outlined,
+      activeIcon: Icons.home,
+      label: 'Home',
+    ),
+    BottomNavItem(
+      icon: Icons.search_outlined,
+      activeIcon: Icons.search,
+      label: 'Search',
+    ),
+    BottomNavItem(
+      icon: Icons.person_outline,
+      activeIcon: Icons.person,
+      label: 'Profile',
+    ),
+  ],
+)
+
+// With badges and custom colors
+CustomBottomNavigationBarWidget(
+  currentIndex: controller.currentIndex.value,
+  onTap: (index) => controller.changePage(index),
+  activeColor: ColorStyle.primary,
+  inactiveColor: ColorStyle.textSecondary,
+  backgroundColor: ColorStyle.white,
+  items: [
+    BottomNavItem(
+      icon: Icons.home_outlined,
+      activeIcon: Icons.home,
+      label: 'Home',
+    ),
+    BottomNavItem(
+      icon: Icons.notifications_outlined,
+      activeIcon: Icons.notifications,
+      label: 'Notifications',
+      badgeCount: 5,
+    ),
+    BottomNavItem(
+      icon: Icons.message_outlined,
+      activeIcon: Icons.message,
+      label: 'Messages',
+      badgeCount: 12,
+    ),
+    BottomNavItem(
+      icon: Icons.settings_outlined,
+      activeIcon: Icons.settings,
+      label: 'Settings',
+    ),
+  ],
+)
+
+// Without labels
+CustomBottomNavigationBarWidget(
+  currentIndex: 0,
+  showLabels: false,
+  onTap: (index) => handleNavigation(index),
+  items: [
+    BottomNavItem(
+      icon: Icons.home_outlined,
+      activeIcon: Icons.home,
+    ),
+    BottomNavItem(
+      icon: Icons.explore_outlined,
+      activeIcon: Icons.explore,
+    ),
+    BottomNavItem(
+      icon: Icons.favorite_outline,
+      activeIcon: Icons.favorite,
+    ),
+  ],
+)
+
+// Shifting type with custom styling
+CustomBottomNavigationBarWidget(
+  currentIndex: 2,
+  type: BottomNavType.shifting,
+  height: 70.h,
+  elevation: 8,
+  borderRadius: 24.r,
+  activeColor: ColorStyle.primary,
+  inactiveColor: ColorStyle.gray400,
+  backgroundColor: ColorStyle.white,
+  selectedFontSize: 13.sp,
+  unselectedFontSize: 11.sp,
+  iconSize: 26.sp,
+  onTap: (index) => navigateToPage(index),
+  items: [
+    BottomNavItem(
+      icon: Icons.dashboard_outlined,
+      activeIcon: Icons.dashboard,
+      label: 'Dashboard',
+    ),
+    BottomNavItem(
+      icon: Icons.analytics_outlined,
+      activeIcon: Icons.analytics,
+      label: 'Analytics',
+    ),
+    BottomNavItem(
+      icon: Icons.add_circle_outline,
+      activeIcon: Icons.add_circle,
+      label: 'Add',
+    ),
+    BottomNavItem(
+      icon: Icons.notifications_outlined,
+      activeIcon: Icons.notifications,
+      label: 'Alerts',
+      badgeCount: 3,
+    ),
+    BottomNavItem(
+      icon: Icons.menu,
+      activeIcon: Icons.menu_open,
+      label: 'Menu',
+    ),
+  ],
+)
+```
+
+#### 16. CustomFabBottomAppBarWidget
+
+**Purpose:** Bottom app bar with center-docked FAB
+
+**File:** `lib/shared/widgets/custom_fab_bottom_app_bar_widget.dart`
+
+**Key Features:**
+- Center-docked FAB with notch
+- Support for 2 or 4 navigation items (split on both sides of FAB)
+- Active/inactive states with customizable colors
+- Icon and optional label support
+- Smooth animations
+- Fully customizable appearance
+- Perfect for scanner/camera features in center
+
+**Usage Examples:**
+
+```dart
+// Basic usage with 4 items (2 left, FAB center, 2 right)
+Scaffold(
+  floatingActionButton: FloatingActionButton(
+    onPressed: () => openScanner(),
+    backgroundColor: ColorStyle.primary,
+    child: Icon(Icons.qr_code_scanner),
+  ),
+  floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+  bottomNavigationBar: CustomFabBottomAppBarWidget(
+    currentIndex: controller.currentIndex.value,
+    onTap: (index) => controller.changePage(index),
+    onFabPressed: () => openScanner(),
+    items: [
+      FabBottomNavItem(
+        icon: Icons.home_outlined,
+        activeIcon: Icons.home,
+      ),
+      FabBottomNavItem(
+        icon: Icons.favorite_outline,
+        activeIcon: Icons.favorite,
+      ),
+      FabBottomNavItem(
+        icon: Icons.person_outline,
+        activeIcon: Icons.person,
+      ),
+      FabBottomNavItem(
+        icon: Icons.settings_outlined,
+        activeIcon: Icons.settings,
+      ),
+    ],
+  ),
+)
+
+// With labels
+CustomFabBottomAppBarWidget(
+  currentIndex: 0,
+  showLabels: true,
+  activeColor: ColorStyle.primary,
+  inactiveColor: ColorStyle.textSecondary,
+  backgroundColor: ColorStyle.white,
+  onTap: (index) => handleNavigation(index),
+  onFabPressed: () => openCamera(),
+  items: [
+    FabBottomNavItem(
+      icon: Icons.home_outlined,
+      activeIcon: Icons.home,
+      label: 'Home',
+    ),
+    FabBottomNavItem(
+      icon: Icons.search_outlined,
+      activeIcon: Icons.search,
+      label: 'Search',
+    ),
+    FabBottomNavItem(
+      icon: Icons.person_outline,
+      activeIcon: Icons.person,
+      label: 'Profile',
+    ),
+    FabBottomNavItem(
+      icon: Icons.menu,
+      activeIcon: Icons.menu_open,
+      label: 'Menu',
+    ),
+  ],
 )
 ```
 

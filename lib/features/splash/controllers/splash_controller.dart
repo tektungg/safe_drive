@@ -37,7 +37,7 @@ class SplashController extends GetxController {
                 'Auto-login: Valid session and token found',
                 tag: 'Splash',
               );
-              Get.offAllNamed(Routes.homeRoute);
+              Get.offAllNamed(Routes.mainRoute);
               return;
             } else {
               // Token expired

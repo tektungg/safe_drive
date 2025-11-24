@@ -4,18 +4,20 @@ import 'package:safe_drive/features/edit_profile/bindings/edit_profile_binding.d
 import 'package:safe_drive/features/edit_profile/screen/ui/edit_profile_screen.dart';
 import 'package:safe_drive/features/home/bindings/home_binding.dart';
 import 'package:safe_drive/features/home/screen/ui/home_screen.dart';
+import 'package:safe_drive/features/main/bindings/main_binding.dart';
+import 'package:safe_drive/features/main/screen/ui/main_screen.dart';
 import 'package:safe_drive/features/profile_setup/bindings/profile_setup_binding.dart';
 import 'package:safe_drive/features/profile_setup/screen/ui/profile_setup_screen.dart';
 import 'package:safe_drive/features/scanner/bindings/scanner_binding.dart';
 import 'package:safe_drive/features/scanner/screen/ui/scanner_screen.dart';
 import 'package:safe_drive/features/setting/bindings/setting_binding.dart';
 import 'package:safe_drive/features/setting/screen/ui/setting_screen.dart';
+import 'package:safe_drive/features/sign_in/bindings/sign_in_binding.dart';
+import 'package:safe_drive/features/sign_in/screen/ui/sign_in_screen.dart';
 import 'package:safe_drive/features/sign_up/bindings/sign_up_binding.dart';
 import 'package:safe_drive/features/sign_up/screen/ui/sign_up_screen.dart';
 import 'package:safe_drive/features/splash/bindings/splash_binding.dart';
 import 'package:safe_drive/features/splash/view/ui/splash_screen.dart';
-import 'package:safe_drive/features/sign_in/bindings/sign_in_binding.dart';
-import 'package:safe_drive/features/sign_in/screen/ui/sign_in_screen.dart';
 
 abstract class Pages {
   static final pages = [
@@ -28,6 +30,16 @@ abstract class Pages {
       name: Routes.signInRoute,
       page: () => const SignInScreen(),
       binding: SignInBinding(),
+    ),
+    GetPage(
+      name: Routes.mainRoute,
+      page: () => const MainScreen(),
+      binding: MainBinding(),
+      bindings: [
+        HomeBinding(),
+        ScannerBinding(),
+        SettingBinding(),
+      ],
     ),
     GetPage(
       name: Routes.settingRoute,

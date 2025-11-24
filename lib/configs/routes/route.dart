@@ -3,6 +3,7 @@ abstract class Routes {
   static const String noConnection = '/no_connection';
   static const String signInRoute = '/sign_in';
   static const String flutterGenRoute = '/flutter_gen';
+  static const String mainRoute = '/main';
   static const String settingRoute = '/setting';
   static const String homeRoute = '/home';
   static const String scannerRoute = '/scanner';
