@@ -18,58 +18,104 @@ This document contains comprehensive coding guidelines and instructions for Clau
 
 ## Project Structure
 
+### Overview
+Safe Drive uses a **feature-based architecture** with GetX for state management. The codebase is organized into clear, self-contained modules for maximum maintainability.
+
+### Root Level Structure
+
 ```
 lib/
-├── shared/
-│   ├── styles/           # Centralized styling system
-│   │   ├── color_style.dart
-│   │   ├── text_style.dart
-│   │   └── google_text_style.dart
-│   └── widgets/          # Reusable UI components
-│       ├── custom_button_widget.dart
-│       ├── custom_text_form_field_widget.dart
-│       ├── custom_dialog_widget.dart
-│       ├── custom_toast_widget.dart
-│       ├── custom_bottom_sheet_widget.dart
-│       ├── custom_app_bar_widget.dart
-│       ├── custom_divider_widget.dart
-│       ├── custom_empty_widget.dart
-│       ├── custom_loading_overlay_widget.dart
-│       ├── custom_shimmer_widget.dart
-│       ├── custom_offline_banner_widget.dart
-│       ├── custom_bottom_navigation_bar_widget.dart
-│       ├── custom_fab_bottom_app_bar_widget.dart
-│       ├── auth_header_widget.dart
-│       ├── auth_footer_widget.dart
-│       └── password_requirements_widget.dart
-├── utils/
-│   └── services/         # Application-wide services
-│       ├── logger_service.dart
-│       ├── connectivity_service.dart
-│       ├── permission_service.dart
-│       ├── api_service.dart
-│       ├── hive_service.dart
-│       ├── supabase_service.dart
-│       ├── image_service.dart
-│       ├── applink_service.dart
-│       └── notification_service/
-│           ├── firebase_notification_service.dart
-│           └── local_notification_service.dart
-└── features/
-    └── [feature_name]/
-        ├── constants/
-        ├── models/
-        ├── bindings/
-        ├── controllers/
-        ├── repositories/
-        └── screen/
-            ├── ui/
-            │   └── [feature_name]_screen.dart
-            └── components/
-                ├── [feature_name]_header_component.dart
-                ├── [feature_name]_form_component.dart
-                └── [feature_name]_action_button_component.dart
+├── app.dart              # Main app configuration with GetMaterialApp
+├── main.dart             # App entry point
+├── flavors.dart          # Environment flavors (dev/staging/prod)
+├── configs/              # App-wide configurations
+├── constants/            # Global constants
+├── env/                  # Environment variables
+├── shared/               # Shared resources across features
+├── utils/                # Utilities, functions, helpers, and services
+└── features/             # Feature modules (self-contained)
 ```
+
+### Directory Explanations
+
+#### 📁 `configs/`
+**Purpose:** Application-wide configuration files
+- **pages/**: GetX page bindings and routes configuration
+- **routes/**: Named route definitions for navigation
+- **themes/**: App theme (colors, typography, spacing) configuration
+
+#### 📁 `constants/`
+**Purpose:** Global constant values used across the app
+- `api_constant.dart` - Base API URLs and endpoints
+- `asset_constant.dart` - Asset paths (images, icons, fonts)
+- `hive_constant.dart` - Hive local storage box names
+- `signature_constants.dart` - App signature and security constants
+
+#### 📁 `env/`
+**Purpose:** Environment-specific configuration
+- Manages different environments (development, staging, production)
+- Contains API keys, base URLs per environment
+
+#### 📁 `shared/`
+**Purpose:** Resources shared across multiple features
+
+**Sub-directories:**
+- **models/** - Data models used by multiple features (e.g., UserDataModel)
+- **repositories/** - Shared data repositories
+- **styles/** - Centralized styling system (ColorStyle, TextStyles) ⚠️ **ALWAYS USE THESE**
+- **widgets/** - Reusable UI components (buttons, forms, dialogs, etc.)
+
+#### 📁 `utils/`
+**Purpose:** Utility functions, helpers, and application-wide services
+
+**Sub-directories:**
+- **functions/** - Pure helper functions (dialog utils, signature functions)
+- **helpers/** - Helper classes (error handlers, formatters)
+- **services/** - Application-wide services:
+  - `logger_service.dart` - Centralized logging
+  - `connectivity_service.dart` - Network connectivity monitoring
+  - `permission_service.dart` - App permissions management
+  - `api_service.dart` - HTTP API client
+  - `auth_service.dart` - Authentication service
+  - `hive_service.dart` - Local database (Hive)
+  - `supabase_service.dart` - Supabase backend integration
+  - `image_service.dart` - Image handling (pick, crop, upload)
+  - `applink_service.dart` - Deep linking
+  - `notification_service/` - Push and local notifications
+
+#### 📁 `features/`
+**Purpose:** Feature modules (self-contained by domain)
+
+**Current Features:**
+- **splash/** - Splash screen with app initialization
+- **sign_in/** - User authentication (email/password, Google)
+- **sign_up/** - User registration
+- **profile_setup/** - Initial profile setup after registration
+- **main/** - Main navigation screen with bottom nav
+- **home/** - Home dashboard with stats and quick actions
+- **scanner/** - QR/Barcode scanner functionality
+- **setting/** - App settings and user profile
+- **edit_profile/** - Edit user profile information
+
+**Standard Feature Structure:**
+```
+[feature_name]/
+├── constants/          # Feature-specific constants (API, assets)
+├── models/             # Feature-specific data models
+├── controllers/        # GetX controllers (business logic, state)
+├── repositories/       # Data layer (API calls, local storage)
+└── screen/
+    ├── ui/             # Main screen widgets
+    └── components/     # Screen sub-components (header, form, buttons, etc.)
+```
+
+### Architectural Principles
+
+1. **Feature Isolation**: Each feature is self-contained and can be developed/tested independently
+2. **Component-Based UI**: Screens are split into smaller components for reusability
+3. **Centralized Styling**: All colors and text styles are in `shared/styles/`
+4. **Service Layer**: Common services are in `utils/services/` for app-wide use
+5. **Clear Separation of Concerns**: UI → Controller → Repository → Service
 
 ---
 
